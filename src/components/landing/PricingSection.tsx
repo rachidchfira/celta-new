@@ -20,7 +20,7 @@ const pricingTiers = [
       'Self-paced learning'
     ],
     ctaMessage: "Hi Rachid, I'm interested in the Self-Study program ($80 USD). Can you tell me more?",
-    ctaText: "Buy Course Online",
+    ctaText: "Join The Course",
     isOnlinePurchase: true
   },
   {
