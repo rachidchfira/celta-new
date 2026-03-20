@@ -1,0 +1,26 @@
+{
+  "name": "CELTA Prep Morocco",
+  "short_name": "CELTA Prep",
+  "description": "Pass CELTA on Your First Attempt - Professional preparation course for CELTA certification",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e0c0a",
+  "theme_color": "#c9a84c",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml"
+    }
+  ]
+}

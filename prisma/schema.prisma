@@ -1,0 +1,152 @@
+// This is your Prisma schema file
+// SQLite for local development
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String             @id @default(cuid())
+  email       String             @unique
+  name        String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  accounts    Account[]
+  enrollments CourseEnrollment[]
+  sessions    Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Subscriber {
+  id          String             @id @default(cuid())
+  email       String             @unique
+  name        String?
+  source      String             @default("lead_magnet")
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  enrollments CourseEnrollment[]
+  downloads   Download[]
+}
+
+model Booklet {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  filename    String
+  coverImage  String?
+  isActive    Boolean    @default(true)
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  downloads   Download[]
+}
+
+model Download {
+  id           String     @id @default(cuid())
+  subscriberId String
+  bookletId    String
+  downloadedAt DateTime   @default(now())
+  booklet      Booklet    @relation(fields: [bookletId], references: [id])
+  subscriber   Subscriber @relation(fields: [subscriberId], references: [id])
+}
+
+model CourseEnrollment {
+  id             String           @id @default(cuid())
+  email          String
+  name           String?
+  phone          String?
+  enrollmentCode String           @unique
+  paymentStatus  String           @default("pending")
+  paidAmount     Int              @default(0)
+  enrolledAt     DateTime         @default(now())
+  lastAccessedAt DateTime?
+  expiresAt      DateTime?
+  userId         String?
+  subscriberId   String?
+  subscriber     Subscriber?      @relation(fields: [subscriberId], references: [id])
+  user           User?            @relation(fields: [userId], references: [id])
+  lessonProgress LessonProgress[]
+
+  @@unique([email, enrollmentCode])
+}
+
+model CourseModule {
+  id          String         @id @default(cuid())
+  title       String
+  description String?
+  order       Int            @default(0)
+  isActive    Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  lessons     CourseLesson[]
+}
+
+model CourseLesson {
+  id             String           @id @default(cuid())
+  moduleId       String
+  title          String
+  description    String?
+  youtubeId      String
+  duration       Int              @default(0)
+  order          Int              @default(0)
+  isActive       Boolean          @default(true)
+  hasQuiz        Boolean          @default(false)
+  quizData       String?
+  resources      String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  module         CourseModule     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  lessonProgress LessonProgress[]
+}
+
+model LessonProgress {
+  id           String           @id @default(cuid())
+  enrollmentId String
+  lessonId     String
+  completed    Boolean          @default(false)
+  completedAt  DateTime?
+  watchTime    Int              @default(0)
+  notes        String?
+  lesson       CourseLesson     @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  enrollment   CourseEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+
+  @@unique([enrollmentId, lessonId])
+}

@@ -1,0 +1,51 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0e0c0a"/>
+      <stop offset="100%" style="stop-color:#1a1816"/>
+    </linearGradient>
+    <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c9a84c"/>
+      <stop offset="100%" style="stop-color:#b85c38"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-gradient)"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="200" fill="#c9a84c" opacity="0.05"/>
+  <circle cx="1100" cy="530" r="250" fill="#b85c38" opacity="0.05"/>
+  
+  <!-- Logo Badge -->
+  <circle cx="200" cy="315" r="80" fill="url(#gold-gradient)"/>
+  <text x="200" y="330" font-family="Georgia, serif" font-size="48" font-weight="bold" fill="#0e0c0a" text-anchor="middle">C</text>
+  
+  <!-- Main Title -->
+  <text x="320" y="280" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="#f5f0e8">CELTA Prep</text>
+  <text x="320" y="360" font-family="Arial, sans-serif" font-size="36" fill="#c9a84c">Morocco</text>
+  
+  <!-- Tagline -->
+  <text x="320" y="440" font-family="Arial, sans-serif" font-size="28" fill="#a09890">Pass CELTA on Your First Attempt</text>
+  
+  <!-- Stats badges -->
+  <g transform="translate(320, 480)">
+    <rect x="0" y="0" width="140" height="40" rx="20" fill="#c9a84c" opacity="0.2"/>
+    <text x="70" y="26" font-family="Arial, sans-serif" font-size="16" fill="#c9a84c" text-anchor="middle">94% Pass Rate</text>
+  </g>
+  
+  <g transform="translate(480, 480)">
+    <rect x="0" y="0" width="140" height="40" rx="20" fill="#b85c38" opacity="0.2"/>
+    <text x="70" y="26" font-family="Arial, sans-serif" font-size="16" fill="#b85c38" text-anchor="middle">47 Teachers</text>
+  </g>
+  
+  <!-- Instructor badge -->
+  <g transform="translate(900, 200)">
+    <rect x="0" y="0" width="250" height="230" rx="20" fill="#f5f0e8"/>
+    <circle cx="125" cy="80" r="50" fill="url(#gold-gradient)"/>
+    <text x="125" y="90" font-family="Arial, sans-serif" font-size="20" fill="#0e0c0a" text-anchor="middle">RC</text>
+    <text x="125" y="155" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#0e0c0a" text-anchor="middle">Rachid Chfirra</text>
+    <text x="125" y="180" font-family="Arial, sans-serif" font-size="14" fill="#b85c38" text-anchor="middle">CELTA Certified</text>
+    <text x="125" y="205" font-family="Arial, sans-serif" font-size="14" fill="#b85c38" text-anchor="middle">DELTA Candidate</text>
+  </g>
+</svg>

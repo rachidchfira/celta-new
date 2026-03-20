@@ -1,0 +1,5 @@
+# CELTA Prep Morocco
+User-agent: *
+Allow: /
+
+Sitemap: https://celta-prep-morocco.com/sitemap.xml
