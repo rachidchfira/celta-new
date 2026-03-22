@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 const pricingTiers = [
   {
     name: "Self-Study",
-    price: "80",
+    price: "79",
     description: "For independent learners on a budget.",
     features: [
       'Full recorded curriculum access',
@@ -25,7 +25,7 @@ const pricingTiers = [
   },
   {
     name: "Full Prep Program",
-    price: "150",
+    price: "149",
     description: "The complete preparation experience.",
     isPopular: true,
     features: [
@@ -40,7 +40,7 @@ const pricingTiers = [
   },
   {
     name: "VIP Intensive",
-    price: "350",
+    price: "249",
     description: "Maximum support for maximum results.",
     features: [
       'Everything in Full Program',
@@ -49,7 +49,7 @@ const pricingTiers = [
       'Same-day WhatsApp response',
       'Post-CELTA career strategy call'
     ],
-    ctaMessage: "Hi Rachid, I'm interested in the VIP Intensive ($350 USD). I'd like to discuss if it's right for me.",
+    ctaMessage: "Hi Rachid, I'm interested in the VIP Intensive ($249 USD). I'd like to discuss if it's right for me.",
     ctaText: "Apply Now"
   }
 ]
