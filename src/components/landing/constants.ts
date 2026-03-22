@@ -160,7 +160,7 @@ export const curriculumWeeks: WeekData[] = [
 export const pricingTiers: PricingTier[] = [
   {
     name: "Self-Study Support",
-    price: "80",
+    price: "79",
     description: "Perfect for independent learners on a budget.",
     features: [
       'Full recorded curriculum access',
@@ -168,11 +168,11 @@ export const pricingTiers: PricingTier[] = [
       'Community WhatsApp group',
       'Self-paced learning'
     ],
-    ctaMessage: "Hi Rachid, I'm interested in the Self-Study Support ($80 USD). I'm from [YOUR COUNTRY]"
+    ctaMessage: "Hi Rachid, I'm interested in the Self-Study Support ($79 USD). I'm from [YOUR COUNTRY]"
   },
   {
     name: "Full Prep Program",
-    price: "150",
+    price: "149",
     description: "The complete preparation experience.",
     isPopular: true,
     features: [
@@ -183,12 +183,12 @@ export const pricingTiers: PricingTier[] = [
       'All assignments reviewed',
       'Limited to 12 students'
     ],
-    ctaMessage: "Hi Rachid, I'm interested in the Full Prep Program ($150 USD). I'm from [YOUR COUNTRY]",
+    ctaMessage: "Hi Rachid, I'm interested in the Full Prep Program ($149 USD). I'm from [YOUR COUNTRY]",
     limited: true
   },
   {
     name: "VIP Intensive",
-    price: "350",
+    price: "249",
     description: "Maximum support for maximum results.",
     features: [
       'Everything in Full Program',
@@ -199,7 +199,7 @@ export const pricingTiers: PricingTier[] = [
       'DELTA pathway roadmap',
       'Maximum 3 students'
     ],
-    ctaMessage: "Hi Rachid, I'm interested in the VIP Intensive ($350 USD). I'm from [YOUR COUNTRY]",
+    ctaMessage: "Hi Rachid, I'm interested in the VIP Intensive ($249 USD). I'm from [YOUR COUNTRY]",
     limited: true
   }
 ]
