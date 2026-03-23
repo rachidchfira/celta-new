@@ -1,5 +1,5 @@
 import { AnimatedSection } from './AnimatedSection'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, ArrowRight } from 'lucide-react'
 
 const problems = [
   {
@@ -22,12 +22,26 @@ const problems = [
 
 export function ProblemSection() {
   return (
-    <section className="py-16 md:py-24 bg-[#0e0c0a]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16 md:py-24 bg-[#0e0c0a] relative overflow-hidden">
+      {/* Background texture */}
+      <div className="absolute inset-0 opacity-[0.04]" style={{
+        backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)',
+        backgroundSize: '32px 32px'
+      }} />
+      {/* Ambient glows */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#b85c38]/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#c9a84c]/6 rounded-full blur-3xl" />
+      
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#f5f0e8] mb-6">
-              The Truth About CELTA in Morocco
+            <div className="inline-flex items-center gap-2 bg-[#b85c38]/20 border border-[#b85c38]/30 px-4 py-1.5 rounded-full mb-6">
+              <AlertTriangle className="w-3.5 h-3.5 text-[#b85c38]" />
+              <span className="font-body text-xs text-[#b85c38] uppercase tracking-widest font-medium">Sound familiar?</span>
+            </div>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#f5f0e8] mb-6 leading-tight">
+              The Truth About{' '}
+              <span className="text-[#c9a84c]">CELTA in Morocco</span>
             </h2>
             <p className="font-body text-lg md:text-xl text-[#a09890] max-w-3xl mx-auto">
               Every year, talented Moroccan teachers like you face the same fears. 
@@ -36,18 +50,22 @@ export function ProblemSection() {
           </div>
         </AnimatedSection>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           {problems.map((problem, index) => (
             <AnimatedSection key={index}>
-              <div className="bg-[#1a1816] rounded-xl p-6 border border-[#2a2725] hover:border-[#b85c38] transition-colors">
+              <div className="problem-card bg-[#1a1816] rounded-2xl p-6 border border-[#2a2725] group cursor-default relative overflow-hidden">
+                {/* Left accent line */}
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#b85c38]/0 via-[#b85c38] to-[#b85c38]/0 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#b85c38]/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#b85c38]/15 flex items-center justify-center flex-shrink-0 group-hover:bg-[#b85c38]/25 transition-colors duration-300">
                     <AlertTriangle className="w-5 h-5 text-[#b85c38]" />
                   </div>
-                  <div>
-                    <p className="font-body text-lg md:text-xl text-[#f5f0e8] italic mb-2">{problem.fear}</p>
-                    <p className="font-body text-[#a09890]">{problem.reality}</p>
+                  <div className="flex-1">
+                    <p className="font-display text-lg md:text-xl text-[#f5f0e8] italic mb-2 font-semibold">{problem.fear}</p>
+                    <p className="font-body text-[#a09890] leading-relaxed">{problem.reality}</p>
                   </div>
+                  <ArrowRight className="w-5 h-5 text-[#2a2725] group-hover:text-[#b85c38] group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 mt-1" />
                 </div>
               </div>
             </AnimatedSection>
@@ -55,13 +73,19 @@ export function ProblemSection() {
         </div>
         
         <AnimatedSection>
-          <div className="mt-12 text-center">
-            <p className="font-body text-xl md:text-2xl text-[#f5f0e8] font-semibold mb-4">
-              But here&apos;s what happens when you stop preparing alone...
-            </p>
-            <p className="font-body text-lg text-[#c9a84c]">
-              44 out of 47 students passed CELTA on their first attempt after completing this program.
-            </p>
+          <div className="mt-14 text-center">
+            <div className="inline-block bg-gradient-to-r from-[#c9a84c]/10 via-[#c9a84c]/20 to-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-2xl px-8 py-6">
+              <p className="font-display text-xl md:text-2xl text-[#f5f0e8] font-semibold mb-2">
+                But here&apos;s what happens when you stop preparing alone...
+              </p>
+              <div className="flex items-center justify-center gap-3 mt-4">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#c9a84c]/40 max-w-[80px]" />
+                <p className="font-body text-lg text-[#c9a84c] font-semibold">
+                  44 out of 47 students passed CELTA on their first attempt.
+                </p>
+                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#c9a84c]/40 max-w-[80px]" />
+              </div>
+            </div>
           </div>
         </AnimatedSection>
       </div>

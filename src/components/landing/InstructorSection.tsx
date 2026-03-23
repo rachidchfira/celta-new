@@ -1,86 +1,74 @@
 'use client'
 
 import { useState } from 'react'
-import { Badge } from '@/components/ui/badge'
-import { Award, Clock, Play, X } from 'lucide-react'
+import { Award, Clock, Play, X, BookOpen, Globe, Linkedin } from 'lucide-react'
 import { AnimatedSection } from './AnimatedSection'
 
-// Credential Badge Component
-function CredentialBadge({ text }: { text: string }) {
-  return (
-    <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md border border-[#d4cdc0]">
-      <Award className="w-4 h-4 text-[#c9a84c]" />
-      <span className="font-body text-sm text-[#0e0c0a]">{text}</span>
-    </div>
-  )
-}
+const credentials = [
+  { label: 'CELTA Certified', icon: Award },
+  { label: 'TESOL Certificate', icon: BookOpen },
+  { label: 'Train the Trainer', icon: BookOpen },
+  { label: 'DELTA Module 2 Candidate', icon: Award },
+  { label: 'B.A. Linguistics', icon: BookOpen },
+]
 
-// Instructor Avatar Component
-function InstructorAvatar() {
-  return (
-    <div className="relative inline-flex items-center justify-center">
-      <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] p-1">
-        <div className="w-full h-full rounded-full overflow-hidden">
-          <img 
-            src="/instructor.jpeg" 
-            alt="Rachid Chfirra - CELTA Prep Instructor"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-      <div className="absolute -bottom-2 -right-2 bg-[#c9a84c] rounded-full p-2">
-        <Award className="w-5 h-5 text-[#0e0c0a]" />
-      </div>
-    </div>
-  )
-}
-
-// Video Introduction Component
 function VideoIntroduction() {
   const [isPlaying, setIsPlaying] = useState(false)
-
-  // YouTube video ID from https://youtu.be/usqsM5IIoqo
   const videoId = 'usqsM5IIoqo'
 
   return (
-    <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#d4cdc0] bg-[#0e0c0a]">
+    <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#2a2725] bg-[#0e0c0a]">
+      {/* Gold border glow */}
+      <div className="absolute inset-0 rounded-3xl ring-1 ring-[#c9a84c]/20 pointer-events-none z-20" />
+
       <div className="aspect-video relative">
         {!isPlaying ? (
           <>
-            <div className="absolute inset-0 bg-gradient-to-br from-[#1a1816] to-[#0e0c0a]" />
-            {/* Video thumbnail background */}
-            <div className="absolute inset-0 opacity-30">
-              <img 
+            {/* Thumbnail */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#1a1410] to-[#0e0c0a]" />
+            <div className="absolute inset-0 opacity-25">
+              <img
                 src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                 alt="Video thumbnail"
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  // Fallback to lower quality thumbnail
-                  e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-                }}
+                onError={(e) => { e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` }}
               />
             </div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="mb-4">
-                <InstructorAvatar />
+            {/* Dot pattern overlay */}
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)', backgroundSize: '20px 20px' }} />
+
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
+              {/* Instructor photo */}
+              <div className="w-20 h-20 rounded-full p-0.5 animate-glow-ring" style={{ background: 'linear-gradient(135deg, #c9a84c, #b85c38)' }}>
+                <div className="w-full h-full rounded-full overflow-hidden">
+                  <img src="/instructor.jpeg" alt="Rachid Chfirra" className="w-full h-full object-cover" />
+                </div>
               </div>
+
+              {/* Play button */}
               <button
                 onClick={() => setIsPlaying(true)}
-                className="w-20 h-20 rounded-full bg-[#c9a84c] flex items-center justify-center hover:bg-[#b8973b] transition-all duration-300 hover:scale-110 shadow-lg group"
+                className="group relative w-18 h-18"
+                aria-label="Play video"
               >
-                <Play className="w-8 h-8 text-[#0e0c0a] ml-1 group-hover:scale-110 transition-transform" />
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b8973b] flex items-center justify-center shadow-2xl shadow-[#c9a84c]/30 group-hover:shadow-[#c9a84c]/50 group-hover:scale-110 transition-all duration-300">
+                  <Play className="w-7 h-7 text-[#0e0c0a] ml-1" fill="currentColor" />
+                </div>
+                {/* Ping rings */}
+                <span className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-ping" />
               </button>
-              <p className="font-body text-[#f5f0e8] mt-4 text-sm">
-                Watch Rachid&apos;s Introduction
-              </p>
-              <div className="flex items-center gap-2 mt-2 text-[#a09890] text-xs font-body">
-                <Clock className="w-3 h-3" />
-                <span>2 min</span>
+
+              <div className="text-center">
+                <p className="font-body text-[#f5f0e8] text-sm font-semibold">Watch Rachid&apos;s Introduction</p>
+                <div className="flex items-center justify-center gap-1.5 mt-1 text-[#a09890]">
+                  <Clock className="w-3 h-3" />
+                  <span className="font-body text-xs">2 min</span>
+                </div>
               </div>
             </div>
           </>
         ) : (
-          <div className="absolute inset-0 bg-[#0e0c0a]">
+          <div className="absolute inset-0">
             <iframe
               src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
               title="Rachid Chfirra - CELTA Prep Morocco Introduction"
@@ -90,9 +78,9 @@ function VideoIntroduction() {
             />
             <button
               onClick={() => setIsPlaying(false)}
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-[#0e0c0a]/80 flex items-center justify-center hover:bg-[#0e0c0a] transition-colors"
+              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#0e0c0a]/80 backdrop-blur-sm flex items-center justify-center hover:bg-[#0e0c0a] transition-colors border border-[#2a2725]"
             >
-              <X className="w-5 h-5 text-[#f5f0e8]" />
+              <X className="w-4 h-4 text-[#f5f0e8]" />
             </button>
           </div>
         )}
@@ -103,50 +91,59 @@ function VideoIntroduction() {
 
 export function InstructorSection() {
   return (
-    <section className="py-16 md:py-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16 md:py-28 bg-[#f5f0e8] relative overflow-hidden">
+      <div className="absolute inset-0 dot-pattern opacity-20" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a84c]/5 rounded-full blur-3xl" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <AnimatedSection>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Video Side */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Video */}
             <div className="order-2 lg:order-1">
               <VideoIntroduction />
             </div>
-            
-            {/* Story Side */}
+
+            {/* Story */}
             <div className="order-1 lg:order-2">
-              <Badge className="mb-4 bg-[#c9a84c]/20 text-[#c9a84c] border-[#c9a84c] font-body">
-                Your Instructor
-              </Badge>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0e0c0a] mb-6">
-                I went through CELTA alone. So you don&apos;t have to.
+              <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/30 px-4 py-1.5 rounded-full mb-6">
+                <span className="font-body text-xs text-[#c9a84c] uppercase tracking-widest font-semibold">Your Instructor</span>
+              </div>
+
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0e0c0a] mb-6 leading-tight">
+                I went through CELTA alone.{' '}
+                <span className="text-[#b85c38]">So you don&apos;t have to.</span>
               </h2>
-              <div className="font-body text-[#6b6560] space-y-4 text-lg">
+
+              <div className="font-body text-[#6b6560] space-y-4 leading-relaxed mb-8">
                 <p>
-                  When I started my CELTA journey, there was no one in Morocco who could tell me what to expect. 
-                  No prep course. No local mentor. No one who understood what it meant to be a Moroccan teacher 
+                  When I started my CELTA journey, there was no one in Morocco who could tell me what to expect.
+                  No prep course. No local mentor. No one who understood what it meant to be a Moroccan teacher
                   facing an international assessment.
                 </p>
                 <p>
-                  I passed — but not without struggle. I made mistakes that could have been avoided. 
-                  I felt anxieties that could have been dissolved with proper preparation.
-                </p>
-                <p>
-                  After teaching across Morocco and Vietnam, earning my TESOL, completing Train the Trainer, 
-                  and now pursuing my DELTA Module 2, I&apos;ve spent years understanding exactly what makes 
-                  CELTA challenging — and how to make it achievable for teachers like us.
+                  I passed — but not without struggle. I made mistakes that could have been avoided.
+                  I felt anxieties that proper preparation would have dissolved.
                 </p>
                 <p className="text-[#0e0c0a] font-semibold">
-                  I built CELTA Prep Morocco because I want every Moroccan teacher after me to have what I didn&apos;t: 
+                  I built CELTA Prep Morocco so every Moroccan teacher after me has what I didn&apos;t:
                   preparation, support, and the confidence that comes from knowing exactly what you&apos;re walking into.
                 </p>
               </div>
-              
-              <div className="mt-8 flex flex-wrap gap-2">
-                <CredentialBadge text="CELTA Certified" />
-                <CredentialBadge text="TESOL Certificate" />
-                <CredentialBadge text="Train the Trainer" />
-                <CredentialBadge text="DELTA Module 2 Candidate" />
-                <CredentialBadge text="B.A. Linguistics" />
+
+              {/* Credentials grid */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {credentials.map((cred, i) => (
+                  <div key={i} className="inline-flex items-center gap-2 glass border border-[#d4cdc0] px-3 py-1.5 rounded-full hover:border-[#c9a84c]/50 transition-colors duration-200">
+                    <Award className="w-3.5 h-3.5 text-[#c9a84c]" />
+                    <span className="font-body text-xs text-[#0e0c0a] font-medium">{cred.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Location row */}
+              <div className="flex items-center gap-3 pt-4 border-t border-[#d4cdc0]">
+                <Globe className="w-4 h-4 text-[#6b6560]" />
+                <span className="font-body text-sm text-[#6b6560]">Based in Vietnam · Teaching since 2019 · Moroccan 🇲🇦</span>
               </div>
             </div>
           </div>
