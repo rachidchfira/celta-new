@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "skills": {
+    "ab-test-setup": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "9c96cb82a1d348a3ceee6fb8d61e876bc02a452fce14d3b746f1419accbf3ad8"
+    },
+    "ai-seo": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "5f7ce5ccdb2b0dce5e1ea7f3ed8bf17070b790865e91725ca8908e6ec829e164"
+    },
+    "churn-prevention": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "ce389baf7e32cc942143503ecba7068784ca2c790460824c1e5a306d83d1283f"
+    },
+    "copywriting": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "2e83eda2221e97166172a0798e9b0379e34080595e107e2fc0cf580e9b3bbf7b"
+    },
+    "email-sequence": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "2b313030c852960ea6dbc2d39484fbe32bc9ab231ddfd458baafacf19c5f9c25"
+    },
+    "launch-strategy": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "5d74a25820c4f36d58dd90bafa2f3bfe0350806b699d6a16d2afad53ec7a02fe"
+    },
+    "lead-magnets": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "b71ffc7be2d96e4887ccedf457d02c395f78e68723dab59bd8d6a2a9959ec6c4"
+    },
+    "page-cro": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "9505748dba2319487b285f8ab8c1e5417fce38a512d596e1c9e2e87b34b196e1"
+    },
+    "social-content": {
+      "source": "rachidchfira/marketingskills",
+      "sourceType": "github",
+      "computedHash": "85ffbc05cf88939ba3ff643a315928185af16181470349dfbaad2880047c9900"
+    }
+  }
+}
