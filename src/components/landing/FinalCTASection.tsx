@@ -72,8 +72,7 @@ export function FinalCTASection() {
             <Button
               asChild
               size="lg"
-              variant="outline"
-              className="font-body font-semibold text-lg px-10 py-7 border-2 border-[#f5f0e8]/20 text-[#f5f0e8] hover:bg-[#f5f0e8]/5 transition-all duration-300"
+              className="font-body font-semibold text-lg px-10 py-7 bg-transparent border-2 border-[#f5f0e8]/40 text-[#f5f0e8] hover:bg-[#f5f0e8]/10 hover:border-[#f5f0e8]/70 transition-all duration-300"
             >
               <a href="#pricing">
                 View Pricing
