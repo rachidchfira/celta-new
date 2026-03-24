@@ -1,48 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { supabaseAdmin } from '@/lib/supabase'
 
-// Static booklets available for download
+// Real booklets that exist in /public/downloads/
 const AVAILABLE_BOOKLETS = [
   {
-    id: 'celta-grammar-guide',
-    title: 'CELTA Grammar Guide',
-    description: 'Essential grammar points every CELTA trainee needs to know',
-    filename: 'celta-grammar-guide.pdf',
-    size: '2.4 MB'
-  },
-  {
-    id: 'lesson-plan-template',
-    title: 'Lesson Plan Template',
-    description: 'Professional CELTA lesson plan template with examples',
-    filename: 'lesson-plan-template.pdf',
-    size: '1.2 MB'
-  },
-  {
-    id: 'ccq-bank',
-    title: 'CCQ Examples Bank',
-    description: '50+ concept checking questions for common language points',
-    filename: 'ccq-bank.pdf',
+    id: 'see-your-learner',
+    title: 'See Your Learner',
+    description: 'Assignment 1 guide — understand your learners the way CELTA assessors expect',
+    filename: 'see-your-learner.pdf',
     size: '1.8 MB'
+  },
+  {
+    id: 'think-like-celta-trainer',
+    title: 'Think Like a CELTA Trainer',
+    description: 'Get inside the assessor\'s mind and know exactly what they\'re looking for',
+    filename: 'think-like-celta-trainer.pdf',
+    size: '2.1 MB'
+  },
+  {
+    id: 'the-celta-mindset',
+    title: 'The CELTA Mindset',
+    description: 'Mental resilience and confidence strategies for the most intense 4 weeks of your career',
+    filename: 'the-celta-mindset.pdf',
+    size: '1.5 MB'
   }
 ]
 
-// POST - Subscribe email (saves to leads table)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { email, name, source = 'lead_magnet' } = body
 
     if (!email) {
-      return NextResponse.json(
-        { error: 'Email is required' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
 
     let isNew = true
 
-    // Check if already subscribed
+    // Save to DB — graceful degradation if DB is unavailable
     try {
       const existing = await db.subscriber.findUnique({
         where: { email: email.toLowerCase() }
@@ -51,7 +46,6 @@ export async function POST(request: NextRequest) {
       if (existing) {
         isNew = false
       } else {
-        // Create new subscriber
         await db.subscriber.create({
           data: {
             email: email.toLowerCase(),
@@ -61,56 +55,21 @@ export async function POST(request: NextRequest) {
         })
       }
     } catch (dbError) {
-      console.log('Database error, continuing:', dbError)
-      // Continue anyway - graceful degradation
+      console.log('DB unavailable, continuing without saving:', dbError)
     }
 
     return NextResponse.json({
       success: true,
-      message: isNew ? 'Successfully subscribed!' : 'Welcome back!',
+      message: isNew ? 'You\'re in! Download your free booklets below.' : 'Welcome back! Your booklets are ready.',
       isNew,
       booklets: AVAILABLE_BOOKLETS
     })
   } catch (error) {
     console.error('Subscription error:', error)
-    return NextResponse.json(
-      { error: 'Failed to subscribe' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to subscribe. Please try again.' }, { status: 500 })
   }
 }
 
-// GET - Get all leads (for admin)
 export async function GET() {
-  try {
-    if (!supabaseAdmin) {
-      return NextResponse.json(
-        { error: 'Database not configured' },
-        { status: 500 }
-      )
-    }
-
-    const { data: leads, error } = await supabaseAdmin
-      .from('leads')
-      .select('*')
-      .order('created_at', { ascending: false })
-
-    if (error) {
-      return NextResponse.json(
-        { error: 'Failed to fetch leads' },
-        { status: 500 }
-      )
-    }
-
-    return NextResponse.json({
-      success: true,
-      leads
-    })
-  } catch (error) {
-    console.error('Error fetching leads:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch leads' },
-      { status: 500 }
-    )
-  }
+  return NextResponse.json({ booklets: AVAILABLE_BOOKLETS })
 }
