@@ -8,6 +8,7 @@ import { getWhatsAppLink } from './constants'
 const navLinks = [
   { label: 'Curriculum', href: '#curriculum' },
   { label: 'Pricing', href: '#pricing' },
+  { label: 'Assignment Bundle — $39', href: '/bundle' },
   { label: 'FAQ', href: '#faq' }
 ]
 
