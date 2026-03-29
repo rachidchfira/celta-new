@@ -210,7 +210,7 @@ export default function DoctorPage() {
               <Stethoscope className="w-5 h-5 text-[#0b1c36]" />
             </div>
             <div>
-              <h1 className="font-display text-lg font-bold text-white leading-none">Lesson Plan Doctor</h1>
+              <h1 className="font-display text-lg font-bold text-white leading-none">AI Lesson Doctor</h1>
               <p className="font-mono text-[10px] tracking-widest uppercase text-[#c9a84c]/60 mt-0.5">CELTA Precision Review</p>
             </div>
           </div>
