@@ -174,3 +174,30 @@ Useful sections:
 - **SQL Editor** - Run custom queries
 - **Logs** - See API requests
 - **Settings** - Manage API keys
+
+---
+
+## Lesson Plan Doctor Setup
+
+The CELTA Lesson Plan Doctor requires an OpenRouter API key to call Claude AI.
+
+### Environment Variables to Add
+
+```env
+# Required for Lesson Plan Doctor
+OPENROUTER_API_KEY=sk-or-v1-...
+
+# Optional overrides
+DOCTOR_MODEL=anthropic/claude-sonnet-4-5
+```
+
+### Get an OpenRouter Key
+1. Sign up at [openrouter.ai](https://openrouter.ai)
+2. Add credits (Claude Sonnet 4.5 is ~$3/M tokens — a typical diagnosis uses ~1K tokens, costing ~$0.003)
+3. Copy your API key to `.env.local`
+
+### Supabase: Run the new SQL
+After adding the key, run section 8 of `supabase-schema.sql` in your Supabase SQL Editor to create the `lesson_plan_analyses` table.
+
+### Prisma (local dev)
+Run `bun run db:push` or `npx prisma db push` to sync the new `LessonPlanAnalysis` model to your SQLite database.

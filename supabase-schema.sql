@@ -174,3 +174,35 @@ ON CONFLICT (id) DO NOTHING;
 -- ============================================
 -- If you want to track which leads became students:
 -- ALTER TABLE enrollments ADD COLUMN lead_id UUID REFERENCES leads(id);
+
+-- ============================================
+-- 8. LESSON PLAN DOCTOR
+-- ============================================
+CREATE TABLE IF NOT EXISTS lesson_plan_analyses (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  enrollment_id UUID REFERENCES enrollments(id) ON DELETE CASCADE,
+  anonymous_id TEXT,
+  lesson_plan_text TEXT NOT NULL,
+  tier TEXT NOT NULL DEFAULT 'quick',
+  report_json JSONB NOT NULL,
+  verdict TEXT NOT NULL,
+  overall_score INTEGER DEFAULT 0,
+  level TEXT DEFAULT '',
+  skill TEXT DEFAULT '',
+  tp TEXT DEFAULT '',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_analyses_enrollment ON lesson_plan_analyses(enrollment_id);
+CREATE INDEX IF NOT EXISTS idx_analyses_anonymous ON lesson_plan_analyses(anonymous_id, created_at);
+
+-- RLS: enrolled users can only read their own analyses
+ALTER TABLE lesson_plan_analyses ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can read own analyses"
+  ON lesson_plan_analyses FOR SELECT
+  USING (auth.uid()::text = enrollment_id::text OR anonymous_id IS NOT NULL);
+
+CREATE POLICY "Service role can insert analyses"
+  ON lesson_plan_analyses FOR INSERT
+  WITH CHECK (true);

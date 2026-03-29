@@ -11,6 +11,7 @@ import {
   LeadMagnetSection,
   ProblemSection,
   SolutionSection,
+  DoctorTeaser,
   TestimonialsSection,
   CurriculumSection,
   PersonaSection,
@@ -53,6 +54,9 @@ export default function Home() {
 
       {/* Solution Introduction Section */}
       <SolutionSection />
+
+      {/* Lesson Plan Doctor Teaser */}
+      <DoctorTeaser />
 
       {/* Social Proof Testimonials */}
       <TestimonialsSection />
