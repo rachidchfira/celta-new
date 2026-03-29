@@ -103,7 +103,8 @@ model CourseEnrollment {
   subscriberId   String?
   subscriber     Subscriber?      @relation(fields: [subscriberId], references: [id])
   user           User?            @relation(fields: [userId], references: [id])
-  lessonProgress LessonProgress[]
+  lessonProgress      LessonProgress[]
+  lessonPlanAnalyses  LessonPlanAnalysis[]
 
   @@unique([email, enrollmentCode])
 }
@@ -149,4 +150,23 @@ model LessonProgress {
   enrollment   CourseEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
 
   @@unique([enrollmentId, lessonId])
+}
+
+model LessonPlanAnalysis {
+  id             String            @id @default(cuid())
+  enrollmentId   String?
+  anonymousId    String?
+  lessonPlanText String
+  tier           String            @default("quick")
+  reportJson     String
+  verdict        String
+  overallScore   Int               @default(0)
+  level          String            @default("")
+  skill          String            @default("")
+  tp             String            @default("")
+  createdAt      DateTime          @default(now())
+  enrollment     CourseEnrollment? @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+
+  @@index([enrollmentId])
+  @@index([anonymousId])
 }
