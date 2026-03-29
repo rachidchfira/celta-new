@@ -12,6 +12,8 @@ const navLinks = [
   { label: 'FAQ', href: '#faq' }
 ]
 
+const doctorLink = { label: '✦ AI Lesson Doctor', href: '/doctor' }
+
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -81,6 +83,12 @@ export function MobileNav() {
                   {link.label}
                 </a>
               ))}
+              <a
+                href={doctorLink.href}
+                className="font-body text-sm font-semibold text-[#c9a84c] hover:text-[#b8973b] transition-colors border border-[#c9a84c]/40 hover:border-[#c9a84c] px-3 py-1 rounded-full"
+              >
+                {doctorLink.label}
+              </a>
               <Button
                 asChild
                 size="sm"
@@ -150,6 +158,14 @@ export function MobileNav() {
 
           {/* Nav links */}
           <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a
+              href={doctorLink.href}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center justify-between font-body text-base font-semibold text-[#c9a84c] hover:bg-[#f5f0e8] transition-all duration-200 px-4 py-3.5 rounded-xl border border-[#c9a84c]/30 mb-2"
+            >
+              {doctorLink.label}
+              <span className="text-[#c9a84c]">→</span>
+            </a>
             {navLinks.map((link) => (
               <a
                 key={link.href}
