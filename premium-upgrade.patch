@@ -1,0 +1,3308 @@
+diff --git a/src/app/globals.css b/src/app/globals.css
+index 1a50b46..75f082c 100755
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -146,7 +146,7 @@ html {
+ 
+ /* Custom scrollbar for premium feel */
+ ::-webkit-scrollbar {
+-  width: 8px;
++  width: 6px;
+ }
+ 
+ ::-webkit-scrollbar-track {
+@@ -154,7 +154,7 @@ html {
+ }
+ 
+ ::-webkit-scrollbar-thumb {
+-  background: #c9a84c;
++  background: linear-gradient(180deg, #c9a84c, #b85c38);
+   border-radius: 4px;
+ }
+ 
+@@ -248,3 +248,170 @@ html {
+ .animate-slide-out-left {
+   animation: slide-out-left 0.3s ease-in forwards;
+ }
++
++/* =============================================
++   PREMIUM UPGRADES
++   ============================================= */
++
++/* Gold shimmer effect */
++@keyframes gold-shimmer {
++  0% { background-position: -200% center; }
++  100% { background-position: 200% center; }
++}
++
++.gold-shimmer {
++  background: linear-gradient(
++    90deg,
++    #c9a84c 0%,
++    #e8c96a 40%,
++    #f5e08a 50%,
++    #e8c96a 60%,
++    #c9a84c 100%
++  );
++  background-size: 200% auto;
++  -webkit-background-clip: text;
++  -webkit-text-fill-color: transparent;
++  background-clip: text;
++  animation: gold-shimmer 4s linear infinite;
++}
++
++/* Floating animation */
++@keyframes float-gentle {
++  0%, 100% { transform: translateY(0px); }
++  50% { transform: translateY(-6px); }
++}
++
++.animate-float {
++  animation: float-gentle 4s ease-in-out infinite;
++}
++
++/* Premium card hover */
++.premium-card {
++  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
++  will-change: transform;
++}
++
++.premium-card:hover {
++  transform: translateY(-4px);
++  box-shadow: 0 20px 60px -10px rgba(201, 168, 76, 0.2), 0 8px 24px -8px rgba(0,0,0,0.12);
++}
++
++/* Glass morphism effect */
++.glass {
++  background: rgba(255, 255, 255, 0.7);
++  backdrop-filter: blur(12px);
++  -webkit-backdrop-filter: blur(12px);
++  border: 1px solid rgba(255, 255, 255, 0.5);
++}
++
++/* Glow ring for the instructor photo */
++@keyframes glow-ring {
++  0%, 100% { box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.4), 0 0 30px rgba(201, 168, 76, 0.2); }
++  50% { box-shadow: 0 0 0 8px rgba(201, 168, 76, 0.15), 0 0 50px rgba(201, 168, 76, 0.3); }
++}
++
++.animate-glow-ring {
++  animation: glow-ring 3s ease-in-out infinite;
++}
++
++/* Gradient border for popular card */
++.pricing-popular {
++  box-shadow: 0 0 0 2px #c9a84c, 0 20px 60px -10px rgba(201, 168, 76, 0.3), 0 8px 24px rgba(0,0,0,0.1);
++}
++
++/* Problem card hover */
++.problem-card {
++  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
++}
++
++.problem-card:hover {
++  transform: translateX(6px);
++  border-color: #b85c38 !important;
++}
++
++/* Dotted pattern background */
++.dot-pattern {
++  background-image: radial-gradient(circle, rgba(201, 168, 76, 0.15) 1px, transparent 1px);
++  background-size: 24px 24px;
++}
++
++/* Mesh gradient background */
++.mesh-gradient {
++  background: 
++    radial-gradient(at 40% 20%, rgba(201, 168, 76, 0.1) 0px, transparent 50%),
++    radial-gradient(at 80% 0%, rgba(184, 92, 56, 0.08) 0px, transparent 40%),
++    radial-gradient(at 0% 50%, rgba(201, 168, 76, 0.06) 0px, transparent 40%);
++}
++
++/* Btn shine sweep */
++.btn-shine {
++  position: relative;
++  overflow: hidden;
++}
++
++.btn-shine::after {
++  content: '';
++  position: absolute;
++  top: -50%;
++  left: -60%;
++  width: 35%;
++  height: 200%;
++  background: rgba(255, 255, 255, 0.25);
++  transform: skewX(-20deg);
++  transition: left 0.5s ease;
++}
++
++.btn-shine:hover::after {
++  left: 120%;
++}
++
++/* Selection color */
++::selection {
++  background: rgba(201, 168, 76, 0.25);
++  color: #0e0c0a;
++}
++
++/* Testimonial quote */
++.quote-mark-bg {
++  font-family: var(--font-cormorant), Georgia, serif;
++  font-size: 9rem;
++  line-height: 0.6;
++  color: rgba(201, 168, 76, 0.1);
++  user-select: none;
++  pointer-events: none;
++}
++
++/* Animated underline */
++.hover-underline {
++  position: relative;
++}
++
++.hover-underline::after {
++  content: '';
++  position: absolute;
++  bottom: -2px;
++  left: 0;
++  width: 0;
++  height: 1.5px;
++  background: #c9a84c;
++  transition: width 0.3s ease;
++}
++
++.hover-underline:hover::after {
++  width: 100%;
++}
++
++/* Stat number styling */
++.stat-number {
++  font-variant-numeric: tabular-nums;
++}
++
++/* Guarantee seal spin */
++@keyframes slow-spin {
++  from { transform: rotate(0deg); }
++  to { transform: rotate(360deg); }
++}
++
++.seal-spin {
++  animation: slow-spin 20s linear infinite;
++}
+diff --git a/src/components/landing/CurriculumSection.tsx b/src/components/landing/CurriculumSection.tsx
+index 1c5b065..08ac8aa 100755
+--- a/src/components/landing/CurriculumSection.tsx
++++ b/src/components/landing/CurriculumSection.tsx
+@@ -1,108 +1,158 @@
++'use client'
++
+ import { AnimatedSection } from './AnimatedSection'
+-import { Badge } from '@/components/ui/badge'
+-import { BookOpen, Target, FileText, MessageCircle, Users, Award, CheckCircle2, Heart } from 'lucide-react'
++import { CheckCircle2, ChevronRight } from 'lucide-react'
+ 
+-// Curriculum modules matching actual course
+ const curriculumModules = [
+   {
+     module: 1,
+     title: "Introduction to CELTA",
+     lessons: ["What CELTA Is & How It Works", "The 5 Key Units You'll Master"],
+-    feeling: "After Module 1: You understand exactly what CELTA demands and how to prepare for it."
++    feeling: "The mystery is gone. You finally understand what CELTA actually demands."
+   },
+   {
+     module: 2,
+     title: "Lesson Architecture",
+     lessons: ["Building CELTA-Standard Lessons", "PPP, TTT & Guided Discovery Frameworks"],
+-    feeling: "After Module 2: You can plan lessons that meet CELTA criteria every time."
++    feeling: "You can plan lessons that meet CELTA criteria every time."
+   },
+   {
+     module: 3,
+     title: "Grammar & Vocabulary",
+     lessons: ["FMUP Framework (Form, Meaning, Use, Pronunciation)", "CCQs & Language Analysis"],
+-    feeling: "After Module 3: You teach grammar with confidence using proven frameworks."
++    feeling: "You teach grammar with confidence using proven frameworks."
+   },
+   {
+     module: 4,
+     title: "Receptive Skills",
+     lessons: ["Reading Lessons (Gist → Detail)", "Listening Lessons Without Suffering"],
+-    feeling: "After Module 4: Receptive skills lessons are clear and structured."
++    feeling: "Receptive skills lessons are clear, structured, and purposeful."
+   },
+   {
+     module: 5,
+     title: "Productive Skills",
+     lessons: ["Speaking Lessons Framework", "Writing Lessons That Work"],
+-    feeling: "After Module 5: You balance accuracy and fluency like a pro."
++    feeling: "You balance accuracy and fluency like a pro."
+   },
+   {
+     module: 6,
+     title: "Teaching Practice Survival",
+     lessons: ["The Safe Planning Formula", "Handling Tutor Feedback"],
+-    feeling: "After Module 6: You're ready for TP with systems that work."
++    feeling: "You're ready for TP with systems that actually work."
+   },
+   {
+     module: 7,
+     title: "Written Assignments",
+     lessons: ["All 4 Assignments Explained", "Avoiding Resubmissions"],
+-    feeling: "After Module 7: Written work is no longer a mystery."
++    feeling: "Written work is no longer a mystery — it's a process."
+   },
+   {
+     module: 8,
+     title: "CELTA Survival Guide",
+     lessons: ["How to Get Pass A", "Staying Sane During CELTA"],
+-    feeling: "After Module 8: You're fully prepared to succeed."
++    feeling: "You're fully prepared. Not hoping — knowing."
+   }
+ ]
+ 
++const goldModules = [1, 2, 3, 4]
++
+ export function CurriculumSection() {
+   return (
+-    <section id="curriculum" className="py-16 md:py-24 bg-white">
+-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section id="curriculum" className="py-16 md:py-28 bg-white relative overflow-hidden">
++      {/* Background accent */}
++      <div className="absolute inset-0 dot-pattern opacity-20" />
++      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a84c]/5 rounded-full blur-3xl" />
++
++      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="text-center mb-12">
+-            <Badge className="mb-4 bg-[#c9a84c]/20 text-[#c9a84c] border-[#c9a84c] font-body">
+-              The Program
+-            </Badge>
+-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-6">
+-              8 Modules. 9 Video Lessons. Complete Preparation.
++          <div className="text-center mb-16">
++            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/30 px-4 py-1.5 rounded-full mb-6">
++              <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
++              <span className="font-body text-xs text-[#c9a84c] uppercase tracking-widest font-semibold">The Program</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-5">
++              8 Modules.{' '}
++              <span className="text-[#c9a84c]">Complete Preparation.</span>
+             </h2>
+             <p className="font-body text-lg text-[#6b6560] max-w-2xl mx-auto">
+-              Each module is designed to build on the last, taking you from uncertainty to complete CELTA readiness.
++              Each module builds on the last — from uncertainty to complete CELTA readiness in 4 weeks.
+             </p>
+           </div>
+         </AnimatedSection>
+ 
+-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+-          {curriculumModules.map((module, index) => (
+-            <AnimatedSection key={index}>
+-              <div className="bg-[#f5f0e8] rounded-xl p-5 border border-[#d4cdc0] hover:shadow-lg transition-all duration-300 h-full">
+-                <div className="flex items-center gap-2 mb-3">
+-                  <div className="w-8 h-8 rounded-full bg-[#c9a84c] flex items-center justify-center">
+-                    <span className="font-display font-bold text-[#0e0c0a] text-sm">{module.module}</span>
++        {/* Module grid with connector line */}
++        <div className="relative">
++          {/* Vertical connector line (desktop) */}
++          <div className="hidden lg:block absolute left-1/2 top-8 bottom-8 w-px bg-gradient-to-b from-[#c9a84c]/60 via-[#c9a84c]/20 to-transparent -translate-x-1/2 pointer-events-none" />
++
++          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
++            {curriculumModules.map((mod, index) => {
++              const isGold = goldModules.includes(mod.module)
++              return (
++                <AnimatedSection key={index} className={`stagger-${(index % 4) + 1}`}>
++                  <div className={`group relative h-full rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-default
++                    ${isGold
++                      ? 'bg-[#f5f0e8] border-[#d4cdc0] hover:border-[#c9a84c]/70 hover:shadow-lg hover:shadow-[#c9a84c]/10'
++                      : 'bg-[#0e0c0a] border-[#2a2725] hover:border-[#c9a84c]/40 hover:shadow-lg hover:shadow-[#c9a84c]/10'
++                    }`}
++                  >
++                    {/* Top accent */}
++                    <div className="h-1 w-full bg-gradient-to-r from-[#c9a84c]/60 via-[#c9a84c] to-[#c9a84c]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
++
++                    <div className="p-5">
++                      {/* Module number */}
++                      <div className="flex items-center gap-2.5 mb-4">
++                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#b8973b] flex items-center justify-center shadow-md flex-shrink-0">
++                          <span className="font-display font-bold text-[#0e0c0a] text-sm">{mod.module}</span>
++                        </div>
++                        <ChevronRight className={`w-4 h-4 ${isGold ? 'text-[#c9a84c]' : 'text-[#c9a84c]/60'}`} />
++                      </div>
++
++                      {/* Title */}
++                      <h3 className={`font-display text-base font-bold mb-3 leading-tight ${isGold ? 'text-[#0e0c0a]' : 'text-[#f5f0e8]'}`}>
++                        {mod.title}
++                      </h3>
++
++                      {/* Lessons */}
++                      <ul className="space-y-2 mb-4">
++                        {mod.lessons.map((lesson, i) => (
++                          <li key={i} className="flex items-start gap-2">
++                            <CheckCircle2 className="w-3.5 h-3.5 text-[#c9a84c] mt-0.5 flex-shrink-0" />
++                            <span className={`font-body text-xs leading-snug ${isGold ? 'text-[#6b6560]' : 'text-[#a09890]'}`}>
++                              {lesson}
++                            </span>
++                          </li>
++                        ))}
++                      </ul>
++
++                      {/* Feeling */}
++                      <div className={`pt-3 border-t ${isGold ? 'border-[#d4cdc0]' : 'border-[#2a2725]'}`}>
++                        <p className="font-body text-xs text-[#c9a84c] italic leading-snug">
++                          ✦ {mod.feeling}
++                        </p>
++                      </div>
++                    </div>
+                   </div>
+-                  <h3 className="font-display text-base font-semibold text-[#0e0c0a]">{module.title}</h3>
+-                </div>
+-                <ul className="space-y-1 mb-3">
+-                  {module.lessons.map((lesson, i) => (
+-                    <li key={i} className="flex items-start gap-2 text-sm">
+-                      <CheckCircle2 className="w-4 h-4 text-[#c9a84c] mt-0.5 flex-shrink-0" />
+-                      <span className="font-body text-[#6b6560]">{lesson}</span>
+-                    </li>
+-                  ))}
+-                </ul>
+-                <p className="font-body text-xs text-[#b85c38] italic pt-2 border-t border-[#d4cdc0]">
+-                  {module.feeling}
+-                </p>
+-              </div>
+-            </AnimatedSection>
+-          ))}
++                </AnimatedSection>
++              )
++            })}
++          </div>
+         </div>
+ 
++        {/* Bottom summary bar */}
+         <AnimatedSection>
+-          <div className="mt-8 text-center">
+-            <p className="font-body text-[#6b6560]">
+-              <strong className="text-[#0e0c0a]">Total:</strong> 9 video lessons • ~6 hours of content • Lifetime access
+-            </p>
++          <div className="mt-12 flex flex-wrap justify-center gap-8 items-center bg-[#f5f0e8] rounded-2xl border border-[#d4cdc0] px-8 py-5">
++            {[
++              { num: '8', label: 'Modules' },
++              { num: '9+', label: 'Video lessons' },
++              { num: '~6h', label: 'Of content' },
++              { num: '∞', label: 'Lifetime access' },
++            ].map((item, i) => (
++              <div key={i} className="text-center">
++                <p className="font-display text-2xl font-bold text-[#c9a84c] stat-number">{item.num}</p>
++                <p className="font-body text-xs text-[#6b6560] mt-0.5">{item.label}</p>
++              </div>
++            ))}
+           </div>
+         </AnimatedSection>
+       </div>
+diff --git a/src/components/landing/FAQSection.tsx b/src/components/landing/FAQSection.tsx
+index 29fdd25..2943229 100755
+--- a/src/components/landing/FAQSection.tsx
++++ b/src/components/landing/FAQSection.tsx
+@@ -1,41 +1,78 @@
+-import { Badge } from '@/components/ui/badge'
+ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+ import { AnimatedSection } from './AnimatedSection'
+ import { faqs } from './constants'
++import { MessageCircle } from 'lucide-react'
++import { getWhatsAppLink } from './constants'
+ 
+ export function FAQSection() {
+   return (
+-    <section id="faq" className="py-16 md:py-24 bg-[#e8e0d0]">
+-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section id="faq" className="py-16 md:py-28 bg-[#0e0c0a] relative overflow-hidden">
++      {/* Background */}
++      <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)', backgroundSize: '28px 28px' }} />
++      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/30 to-transparent" />
++      <div className="absolute top-1/3 left-0 w-72 h-72 bg-[#c9a84c]/5 rounded-full blur-3xl" />
++      <div className="absolute bottom-1/3 right-0 w-72 h-72 bg-[#b85c38]/5 rounded-full blur-3xl" />
++
++      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="text-center mb-12">
+-            <Badge className="mb-4 bg-[#c9a84c]/20 text-[#c9a84c] border-[#c9a84c] font-body">
+-              Got Questions?
+-            </Badge>
+-            <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0e0c0a] mb-6">
+-              Frequently Asked Questions
++          <div className="text-center mb-14">
++            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/25 px-4 py-1.5 rounded-full mb-6">
++              <span className="font-body text-xs text-[#c9a84c] uppercase tracking-widest font-semibold">Got Questions?</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#f5f0e8] mb-5">
++              Frequently Asked{' '}
++              <span className="text-[#c9a84c]">Questions</span>
+             </h2>
++            <p className="font-body text-[#a09890] text-lg">
++              Everything you need to know before enrolling.
++            </p>
+           </div>
+         </AnimatedSection>
+ 
+         <AnimatedSection>
+-          <Accordion type="single" collapsible className="space-y-4">
++          <Accordion type="single" collapsible className="space-y-3">
+             {faqs.map((faq, index) => (
+-              <AccordionItem 
+-                key={index} 
++              <AccordionItem
++                key={index}
+                 value={`item-${index}`}
+-                className="bg-white rounded-xl px-6 border border-[#d4cdc0] data-[state=open]:shadow-lg"
++                className="bg-[#1a1816] rounded-2xl px-6 border border-[#2a2725] data-[state=open]:border-[#c9a84c]/40 data-[state=open]:shadow-lg data-[state=open]:shadow-[#c9a84c]/5 transition-all duration-300 overflow-hidden"
+               >
+-                <AccordionTrigger className="font-display text-lg text-[#0e0c0a] hover:text-[#b85c38] text-left py-4">
+-                  {faq.q}
+-                </AccordionTrigger>
+-                <AccordionContent className="font-body text-[#6b6560] pb-4">
++                {/* Gold left accent when open */}
++                <div className="relative">
++                  <AccordionTrigger className="font-body text-base text-[#f5f0e8] hover:text-[#c9a84c] text-left py-5 transition-colors duration-200 [&>svg]:text-[#c9a84c]">
++                    {faq.q}
++                  </AccordionTrigger>
++                </div>
++                <AccordionContent className="font-body text-[#a09890] pb-5 leading-relaxed">
+                   {faq.a}
+                 </AccordionContent>
+               </AccordionItem>
+             ))}
+           </Accordion>
+         </AnimatedSection>
++
++        {/* Still have questions */}
++        <AnimatedSection>
++          <div className="mt-12 text-center">
++            <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-[#1a1816] border border-[#2a2725] rounded-2xl px-8 py-6">
++              <div className="w-10 h-10 rounded-xl bg-[#25D366]/10 flex items-center justify-center flex-shrink-0">
++                <MessageCircle className="w-5 h-5 text-[#25D366]" />
++              </div>
++              <div className="text-center sm:text-left">
++                <p className="font-body text-[#f5f0e8] font-semibold text-sm">Still have questions?</p>
++                <p className="font-body text-[#6b6560] text-xs mt-0.5">Rachid replies within 24 hours on WhatsApp.</p>
++              </div>
++              <a
++                href={getWhatsAppLink("Hi Rachid, I have a question about CELTA Prep Morocco")}
++                target="_blank"
++                rel="noopener noreferrer"
++                className="btn-shine font-body font-semibold text-sm bg-[#25D366] text-white px-5 py-2.5 rounded-xl hover:bg-[#1ebe5d] transition-all duration-200 whitespace-nowrap shadow-md"
++              >
++                Ask on WhatsApp →
++              </a>
++            </div>
++          </div>
++        </AnimatedSection>
+       </div>
+     </section>
+   )
+diff --git a/src/components/landing/FinalCTASection.tsx b/src/components/landing/FinalCTASection.tsx
+index 0a335c8..b7d9571 100755
+--- a/src/components/landing/FinalCTASection.tsx
++++ b/src/components/landing/FinalCTASection.tsx
+@@ -2,61 +2,116 @@
+ 
+ import { Button } from '@/components/ui/button'
+ import { Badge } from '@/components/ui/badge'
+-import { Shield, MessageCircle, ArrowRight, Clock } from 'lucide-react'
++import { Shield, MessageCircle, ArrowRight, Clock, Users, Zap } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ import { getWhatsAppLink } from './constants'
+ 
++const trustSignals = [
++  { icon: Shield, label: 'Continued support until you pass' },
++  { icon: Clock, label: 'Response within 24 hours' },
++  { icon: Users, label: '47+ teachers prepared' },
++  { icon: Zap, label: '94% first-attempt pass rate' },
++]
++
++const paymentMethods = ['Bank Transfer', 'Cash Deposit', 'PayPal', 'Wise']
++
+ export function FinalCTASection() {
+   return (
+-    <section className="py-16 md:py-24 bg-gradient-to-br from-[#c9a84c] to-[#b85c38]">
+-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
++    <section className="py-16 md:py-28 relative overflow-hidden bg-[#0e0c0a]">
++      {/* Layered background */}
++      <div className="absolute inset-0 bg-gradient-to-br from-[#1a1410] via-[#0e0c0a] to-[#0a0e14]" />
++      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/60 to-transparent" />
++      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-[#c9a84c]/6 rounded-full blur-3xl pointer-events-none" />
++      <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#b85c38]/8 rounded-full blur-3xl" />
++      <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#c9a84c]/6 rounded-full blur-3xl" />
++
++      {/* Dot grid */}
++      <div className="absolute inset-0 opacity-[0.03]" style={{
++        backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)',
++        backgroundSize: '28px 28px'
++      }} />
++
++      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+         <AnimatedSection>
+-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+-            Your CELTA journey doesn&apos;t have to be a lonely struggle.
++          {/* Pre-headline badge */}
++          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/30 px-4 py-1.5 rounded-full mb-8">
++            <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
++            <span className="font-body text-xs text-[#c9a84c] uppercase tracking-widest font-semibold">Limited cohort — spots filling fast</span>
++          </div>
++
++          {/* Headline */}
++          <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-[#f5f0e8] mb-6 leading-[1.1]">
++            Your CELTA journey doesn&apos;t
++            have to be a{' '}
++            <span className="relative inline-block">
++              <span className="text-[#c9a84c]">lonely struggle.</span>
++              <svg className="absolute -bottom-1 left-0 w-full" height="4" viewBox="0 0 300 4" preserveAspectRatio="none">
++                <path d="M0 2 Q150 4 300 2" stroke="#c9a84c" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.5"/>
++              </svg>
++            </span>
+           </h2>
+-          <p className="font-body text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+-            In 4 weeks, you could be walking into your CELTA course with complete confidence, 
+-            knowing exactly what to expect and how to succeed.
++
++          <p className="font-body text-lg md:text-xl text-[#a09890] mb-10 max-w-2xl mx-auto leading-relaxed">
++            In 4 weeks, you could be walking into your CELTA course with complete confidence —
++            knowing exactly what to expect, and knowing exactly how to succeed.
+           </p>
+-          
+-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
++
++          {/* Primary CTA */}
++          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+             <Button
+               asChild
+               size="lg"
+-              className="font-body font-semibold text-lg px-10 py-7 bg-[#0e0c0a] text-[#f5f0e8] hover:bg-[#1a1816] shadow-xl"
++              className="btn-shine font-body font-bold text-lg px-10 py-7 bg-gradient-to-r from-[#c9a84c] to-[#b8973b] text-[#0e0c0a] hover:from-[#d4b96a] hover:to-[#c9a84c] shadow-2xl shadow-[#c9a84c]/20 transition-all duration-300"
+             >
+               <a href={getWhatsAppLink("Hi Rachid, I'm ready to start preparing for CELTA. How do I enroll?")} target="_blank" rel="noopener noreferrer">
+                 <MessageCircle className="w-5 h-5 mr-2" />
+-                Enroll Now
++                Enroll Now — WhatsApp Rachid
+                 <ArrowRight className="w-5 h-5 ml-2" />
+               </a>
+             </Button>
++            <Button
++              asChild
++              size="lg"
++              variant="outline"
++              className="font-body font-semibold text-lg px-10 py-7 border-2 border-[#f5f0e8]/20 text-[#f5f0e8] hover:bg-[#f5f0e8]/5 transition-all duration-300"
++            >
++              <a href="#pricing">
++                View Pricing
++              </a>
++            </Button>
+           </div>
+-          
+-          <div className="flex flex-wrap justify-center gap-6 text-white/80 text-sm font-body mb-8">
+-            <span className="flex items-center gap-2">
+-              <Shield className="w-4 h-4" />
+-              Continued support until you pass
+-            </span>
+-            <span className="flex items-center gap-2">
+-              <Clock className="w-4 h-4" />
+-              Response within 24 hours
+-            </span>
++
++          {/* Trust signals row */}
++          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-12">
++            {trustSignals.map(({ icon: Icon, label }, i) => (
++              <span key={i} className="flex items-center gap-2 text-[#6b6560] text-sm font-body">
++                <Icon className="w-4 h-4 text-[#c9a84c]" />
++                {label}
++              </span>
++            ))}
+           </div>
+         </AnimatedSection>
+ 
++        {/* Payment methods card */}
+         <AnimatedSection>
+-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto">
+-            <p className="font-body text-white/90 text-sm mb-3">
+-              Payment methods available for Morocco and MENA region:
++          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 max-w-lg mx-auto border border-white/10">
++            <p className="font-body text-[#6b6560] text-xs uppercase tracking-widest mb-4 font-semibold">
++              Payment methods for Morocco & MENA
+             </p>
+             <div className="flex flex-wrap justify-center gap-2">
+-              {['Bank Transfer', 'Cash Deposit', 'PayPal', 'Wise'].map((method) => (
+-                <Badge key={method} variant="outline" className="border-white/30 text-white font-body">
++              {paymentMethods.map((method) => (
++                <Badge
++                  key={method}
++                  variant="outline"
++                  className="border-[#c9a84c]/30 text-[#a09890] font-body bg-white/5 hover:border-[#c9a84c]/60 transition-colors"
++                >
+                   {method}
+                 </Badge>
+               ))}
+             </div>
++            <p className="font-body text-xs text-[#6b6560] mt-4">
++              💳 Payment plans available for Full Program & VIP — split into 2 installments
++            </p>
+           </div>
+         </AnimatedSection>
+       </div>
+diff --git a/src/components/landing/Footer.tsx b/src/components/landing/Footer.tsx
+index e0e3418..7ee55a0 100755
+--- a/src/components/landing/Footer.tsx
++++ b/src/components/landing/Footer.tsx
+@@ -4,153 +4,145 @@ import { useState } from 'react'
+ import { Button } from '@/components/ui/button'
+ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
+ import { getWhatsAppLink } from './constants'
++import { MessageCircle, BookOpen, Globe, Mail } from 'lucide-react'
+ 
+-// Terms Content Component
+ function TermsContent() {
+   return (
+-    <div className="font-body text-sm text-[#6b6560] space-y-4 max-h-[60vh] overflow-y-auto">
+-      <h4 className="font-display text-lg font-bold text-[#0e0c0a]">Terms of Service</h4>
+-      
+-      <p><strong>1. Acceptance of Terms</strong></p>
+-      <p>By accessing and using CELTA Prep Morocco services, you accept and agree to be bound by the terms and provision of this agreement.</p>
+-      
+-      <p><strong>2. Program Enrollment</strong></p>
+-      <p>Enrollment in our programs is confirmed upon receipt of payment. All fees are non-refundable except as outlined in our guarantee policy.</p>
+-      
+-      <p><strong>3. Program Content</strong></p>
+-      <p>All materials, videos, and resources provided are for personal use only. Sharing, distributing, or reproducing content without permission is prohibited.</p>
+-      
+-      <p><strong>4. Guarantee Policy</strong></p>
+-      <p>Our CELTA Confidence Guarantee requires completion of all 4 weeks and the mock simulation day. Continued support is provided at our discretion based on demonstrated effort and participation.</p>
+-      
+-      <p><strong>5. Intellectual Property</strong></p>
+-      <p>All content, trademarks, and materials are the property of CELTA Prep Morocco and are protected by copyright laws.</p>
+-      
+-      <p><strong>6. Limitation of Liability</strong></p>
+-      <p>CELTA Prep Morocco provides preparation services only. We do not guarantee CELTA certification or employment outcomes.</p>
+-      
+-      <p><strong>7. Contact</strong></p>
+-      <p>For questions about these terms, contact us via WhatsApp.</p>
++    <div className="font-body text-sm text-[#6b6560] space-y-4 max-h-[60vh] overflow-y-auto pr-2">
++      <p><strong className="text-[#0e0c0a]">1. Acceptance of Terms</strong><br />By accessing and using CELTA Prep Morocco services, you accept and agree to be bound by the terms of this agreement.</p>
++      <p><strong className="text-[#0e0c0a]">2. Program Enrollment</strong><br />Enrollment is confirmed upon receipt of payment. All fees are non-refundable except as outlined in our guarantee policy.</p>
++      <p><strong className="text-[#0e0c0a]">3. Program Content</strong><br />All materials, videos, and resources are for personal use only. Sharing, distributing, or reproducing content without permission is prohibited.</p>
++      <p><strong className="text-[#0e0c0a]">4. Guarantee Policy</strong><br />Our CELTA Confidence Guarantee requires completion of all 4 weeks and the mock simulation day. Continued support is provided based on demonstrated participation.</p>
++      <p><strong className="text-[#0e0c0a]">5. Intellectual Property</strong><br />All content, trademarks, and materials are the property of CELTA Prep Morocco and are protected by copyright laws.</p>
++      <p><strong className="text-[#0e0c0a]">6. Limitation of Liability</strong><br />CELTA Prep Morocco provides preparation services only. We do not guarantee CELTA certification or employment outcomes.</p>
++      <p><strong className="text-[#0e0c0a]">7. Contact</strong><br />For questions about these terms, contact us via WhatsApp.</p>
+     </div>
+   )
+ }
+ 
+-// Privacy Content Component
+ function PrivacyContent() {
+   return (
+-    <div className="font-body text-sm text-[#6b6560] space-y-4 max-h-[60vh] overflow-y-auto">
+-      <h4 className="font-display text-lg font-bold text-[#0e0c0a]">Privacy Policy</h4>
+-      
+-      <p><strong>1. Information We Collect</strong></p>
+-      <p>We collect information you provide directly, including name, email address, and payment information when you enroll in our programs.</p>
+-      
+-      <p><strong>2. How We Use Your Information</strong></p>
+-      <p>We use your information to provide and improve our services, communicate with you about your enrollment, and send relevant updates about CELTA preparation.</p>
+-      
+-      <p><strong>3. Data Security</strong></p>
+-      <p>We implement appropriate security measures to protect your personal information from unauthorized access or disclosure.</p>
+-      
+-      <p><strong>4. Third-Party Services</strong></p>
+-      <p>We may use third-party services (e.g., payment processors, email services) that have their own privacy policies.</p>
+-      
+-      <p><strong>5. Cookies</strong></p>
+-      <p>We use cookies to improve your experience on our website and analyze site traffic.</p>
+-      
+-      <p><strong>6. Your Rights</strong></p>
+-      <p>You may request access to, correction of, or deletion of your personal data at any time by contacting us.</p>
+-      
+-      <p><strong>7. Changes to This Policy</strong></p>
+-      <p>We may update this policy periodically. Continued use of our services constitutes acceptance of any changes.</p>
+-      
+-      <p><strong>8. Contact</strong></p>
+-      <p>For privacy-related questions, contact us via WhatsApp.</p>
++    <div className="font-body text-sm text-[#6b6560] space-y-4 max-h-[60vh] overflow-y-auto pr-2">
++      <p><strong className="text-[#0e0c0a]">1. Information We Collect</strong><br />We collect information you provide directly, including name, email address, and payment information when you enroll.</p>
++      <p><strong className="text-[#0e0c0a]">2. How We Use Your Information</strong><br />We use your information to provide and improve our services, communicate about your enrollment, and send relevant CELTA prep updates.</p>
++      <p><strong className="text-[#0e0c0a]">3. Data Security</strong><br />We implement appropriate security measures to protect your personal information from unauthorized access or disclosure.</p>
++      <p><strong className="text-[#0e0c0a]">4. Third-Party Services</strong><br />We may use third-party services (payment processors, email services) that have their own privacy policies.</p>
++      <p><strong className="text-[#0e0c0a]">5. Your Rights</strong><br />You may request access to, correction of, or deletion of your personal data at any time by contacting us.</p>
++      <p><strong className="text-[#0e0c0a]">6. Contact</strong><br />For privacy-related questions, contact us via WhatsApp.</p>
+     </div>
+   )
+ }
+ 
++const footerLinks = [
++  { href: '#curriculum', label: 'Curriculum' },
++  { href: '#pricing', label: 'Pricing' },
++  { href: '#faq', label: 'FAQ' },
++]
++
+ export function Footer() {
+   const [showTerms, setShowTerms] = useState(false)
+   const [showPrivacy, setShowPrivacy] = useState(false)
+ 
+   return (
+     <>
+-      <footer className="py-8 bg-[#0e0c0a] border-t border-[#2a2725]">
+-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+-            <a href="/" className="flex items-center gap-3">
+-              <img 
+-                src="/logo.svg?v=2" 
+-                alt="CELTA Prep Morocco" 
+-                className="h-10 w-auto"
+-              />
+-              <span className="font-display text-lg text-[#f5f0e8]">CELTA Prep Morocco</span>
+-            </a>
+-            
+-            <p className="font-body text-sm text-[#6b6560]">
+-              © {new Date().getFullYear()} Rachid Chfirra. All rights reserved.
+-            </p>
+-            
+-            <div className="flex items-center gap-4">
+-              <button 
+-                onClick={() => setShowTerms(true)}
+-                className="font-body text-sm text-[#a09890] hover:text-[#c9a84c] transition-colors"
+-              >
+-                Terms
+-              </button>
+-              <button 
+-                onClick={() => setShowPrivacy(true)}
+-                className="font-body text-sm text-[#a09890] hover:text-[#c9a84c] transition-colors"
+-              >
+-                Privacy
+-              </button>
+-              <a 
+-                href={getWhatsAppLink("Hi Rachid, I have a question about CELTA Prep Morocco")}
++      <footer className="bg-[#0e0c0a] border-t border-[#1a1816] relative overflow-hidden">
++        {/* Top gold line */}
++        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent" />
++        <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)', backgroundSize: '32px 32px' }} />
++
++        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
++          {/* Main footer content */}
++          <div className="py-12 grid md:grid-cols-3 gap-10 border-b border-[#1a1816]">
++            {/* Brand */}
++            <div>
++              <div className="flex items-center gap-2.5 mb-4">
++                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center shadow-md">
++                  <BookOpen className="w-4 h-4 text-white" strokeWidth={2} />
++                </div>
++                <div>
++                  <p className="font-display font-bold text-[#f5f0e8] text-sm">CELTA Prep Morocco</p>
++                  <p className="font-body text-[#c9a84c] text-[10px] uppercase tracking-widest font-semibold">By Rachid Chfirra</p>
++                </div>
++              </div>
++              <p className="font-body text-sm text-[#6b6560] leading-relaxed mb-4">
++                The only CELTA preparation program designed specifically for Moroccan teachers. 94% first-attempt pass rate.
++              </p>
++              <div className="flex items-center gap-1.5">
++                <Globe className="w-3.5 h-3.5 text-[#6b6560]" />
++                <span className="font-body text-xs text-[#6b6560]">Serving teachers across Morocco & MENA</span>
++              </div>
++            </div>
++
++            {/* Nav links */}
++            <div>
++              <p className="font-body text-xs text-[#6b6560] uppercase tracking-widest font-semibold mb-4">Navigation</p>
++              <ul className="space-y-2.5">
++                {footerLinks.map(link => (
++                  <li key={link.href}>
++                    <a href={link.href} className="font-body text-sm text-[#a09890] hover:text-[#c9a84c] transition-colors duration-200">
++                      {link.label}
++                    </a>
++                  </li>
++                ))}
++                <li>
++                  <button onClick={() => setShowTerms(true)} className="font-body text-sm text-[#a09890] hover:text-[#c9a84c] transition-colors duration-200">Terms</button>
++                </li>
++                <li>
++                  <button onClick={() => setShowPrivacy(true)} className="font-body text-sm text-[#a09890] hover:text-[#c9a84c] transition-colors duration-200">Privacy</button>
++                </li>
++              </ul>
++            </div>
++
++            {/* Contact */}
++            <div>
++              <p className="font-body text-xs text-[#6b6560] uppercase tracking-widest font-semibold mb-4">Get in Touch</p>
++              <a
++                href={getWhatsAppLink("Hi Rachid, I want to learn more about CELTA Prep Morocco")}
+                 target="_blank"
+                 rel="noopener noreferrer"
+-                className="font-body text-sm text-[#a09890] hover:text-[#c9a84c] transition-colors"
++                className="btn-shine inline-flex items-center gap-2 bg-[#25D366] text-white font-body font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-[#1ebe5d] transition-all duration-200 shadow-md mb-4"
+               >
+-                Contact
++                <MessageCircle className="w-4 h-4" />
++                WhatsApp Rachid
+               </a>
++              <p className="font-body text-xs text-[#6b6560] leading-relaxed">
++                Response within 24 hours. Questions about enrollment, payment plans, or the program — all welcome.
++              </p>
++            </div>
++          </div>
++
++          {/* Bottom bar */}
++          <div className="py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
++            <p className="font-body text-xs text-[#6b6560]">
++              © {new Date().getFullYear()} Rachid Chfirra · CELTA Prep Morocco. All rights reserved.
++            </p>
++            <div className="flex items-center gap-1.5">
++              <div className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
++              <span className="font-body text-xs text-[#6b6560]">Currently accepting students</span>
+             </div>
+           </div>
+         </div>
+       </footer>
+ 
+-      {/* Terms Dialog */}
+       <Dialog open={showTerms} onOpenChange={setShowTerms}>
+         <DialogContent className="max-w-2xl bg-white border-[#d4cdc0]">
+           <DialogHeader>
+             <DialogTitle className="font-display text-2xl text-[#0e0c0a]">Terms of Service</DialogTitle>
+-            <DialogDescription className="font-body text-[#6b6560]">
+-              Please read these terms carefully before using our services.
+-            </DialogDescription>
++            <DialogDescription className="font-body text-[#6b6560]">Please read these terms carefully before using our services.</DialogDescription>
+           </DialogHeader>
+           <TermsContent />
+-          <Button
+-            onClick={() => setShowTerms(false)}
+-            className="bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b] font-body font-semibold"
+-          >
+-            I Understand
+-          </Button>
++          <Button onClick={() => setShowTerms(false)} className="bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b] font-body font-semibold">I Understand</Button>
+         </DialogContent>
+       </Dialog>
+ 
+-      {/* Privacy Dialog */}
+       <Dialog open={showPrivacy} onOpenChange={setShowPrivacy}>
+         <DialogContent className="max-w-2xl bg-white border-[#d4cdc0]">
+           <DialogHeader>
+             <DialogTitle className="font-display text-2xl text-[#0e0c0a]">Privacy Policy</DialogTitle>
+-            <DialogDescription className="font-body text-[#6b6560]">
+-              How we collect, use, and protect your information.
+-            </DialogDescription>
++            <DialogDescription className="font-body text-[#6b6560]">How we collect, use, and protect your information.</DialogDescription>
+           </DialogHeader>
+           <PrivacyContent />
+-          <Button
+-            onClick={() => setShowPrivacy(false)}
+-            className="bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b] font-body font-semibold"
+-          >
+-            I Understand
+-          </Button>
++          <Button onClick={() => setShowPrivacy(false)} className="bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b] font-body font-semibold">I Understand</Button>
+         </DialogContent>
+       </Dialog>
+     </>
+diff --git a/src/components/landing/GuaranteeSection.tsx b/src/components/landing/GuaranteeSection.tsx
+index 3180138..b7fc132 100755
+--- a/src/components/landing/GuaranteeSection.tsx
++++ b/src/components/landing/GuaranteeSection.tsx
+@@ -1,41 +1,118 @@
+-import { Shield, CheckCircle2 } from 'lucide-react'
++'use client'
++
++import { Shield, CheckCircle2, Star } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ 
++const guaranteePoints = [
++  'Additional teaching practice sessions included',
++  'Full assignment review for your second attempt',
++  'WhatsApp support through your next CELTA',
++  'No extra cost — ever'
++]
++
++function SpinningSeal() {
++  const text = 'CELTA · CONFIDENCE · GUARANTEE · '
++  const chars = text.split('')
++  const radius = 52
++  const circumference = 2 * Math.PI * radius
++  const charSpacing = circumference / chars.length
++
++  return (
++    <div className="relative w-36 h-36 mx-auto mb-8">
++      {/* Spinning text ring */}
++      <svg
++        className="seal-spin absolute inset-0 w-full h-full"
++        viewBox="0 0 144 144"
++        fill="none"
++      >
++        <defs>
++          <path
++            id="seal-circle"
++            d="M72,72 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"
++          />
++        </defs>
++        <text className="fill-[#c9a84c]" style={{ fontSize: '9.5px', fontFamily: 'var(--font-outfit), sans-serif', fontWeight: '600', letterSpacing: '2px' }}>
++          <textPath href="#seal-circle">{text}</textPath>
++        </text>
++      </svg>
++
++      {/* Center shield */}
++      <div className="absolute inset-0 flex items-center justify-center">
++        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b8973b] flex items-center justify-center shadow-xl">
++          <Shield className="w-9 h-9 text-[#0e0c0a]" strokeWidth={1.5} />
++        </div>
++      </div>
++
++      {/* Outer glow ring */}
++      <div className="absolute inset-0 rounded-full border-2 border-[#c9a84c]/20 animate-glow-ring" />
++    </div>
++  )
++}
++
+ export function GuaranteeSection() {
+   return (
+-    <section className="py-16 md:py-24">
+-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section className="py-16 md:py-24 bg-[#e8e0d0] relative overflow-hidden">
++      {/* Subtle background */}
++      <div className="absolute inset-0 opacity-20" style={{
++        backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)',
++        backgroundSize: '36px 36px'
++      }} />
++      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#c9a84c]/6 rounded-full blur-3xl" />
++
++      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="bg-gradient-to-br from-[#0e0c0a] to-[#1a1816] rounded-3xl p-8 md:p-12 text-center border border-[#2a2725]">
+-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#c9a84c] mb-6">
+-              <Shield className="w-8 h-8 text-[#0e0c0a]" />
+-            </div>
+-            
+-            <h2 className="font-display text-3xl md:text-4xl font-bold text-[#f5f0e8] mb-6">
+-              The CELTA Confidence Guarantee
+-            </h2>
+-            
+-            <p className="font-body text-lg md:text-xl text-[#a09890] mb-6 max-w-2xl mx-auto">
+-              Complete all 4 weeks and the mock teaching day. If you don&apos;t pass CELTA on your first attempt, 
+-              I&apos;ll provide additional 1-on-1 support at <span className="text-[#c9a84c] font-semibold">no extra cost</span> until you do.
+-            </p>
+-            
+-            <p className="font-body text-[#6b6560] mb-8 max-w-xl mx-auto">
+-              This includes: additional teaching practice sessions, assignment reviews, and WhatsApp support through your next CELTA attempt.
+-            </p>
+-            
+-            <div className="flex flex-wrap justify-center gap-4">
+-              <div className="flex items-center gap-2 text-[#f5f0e8]">
+-                <CheckCircle2 className="w-5 h-5 text-[#c9a84c]" />
+-                <span className="font-body">Additional sessions included</span>
++          <div className="bg-gradient-to-br from-[#0e0c0a] to-[#1a1816] rounded-3xl p-8 md:p-14 text-center border border-[#2a2725] relative overflow-hidden shadow-2xl">
++            {/* Inner glow */}
++            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-[#c9a84c]/8 rounded-full blur-2xl" />
++            {/* Corner accents */}
++            <div className="absolute top-4 left-4 w-16 h-16 border-t-2 border-l-2 border-[#c9a84c]/30 rounded-tl-2xl" />
++            <div className="absolute top-4 right-4 w-16 h-16 border-t-2 border-r-2 border-[#c9a84c]/30 rounded-tr-2xl" />
++            <div className="absolute bottom-4 left-4 w-16 h-16 border-b-2 border-l-2 border-[#c9a84c]/30 rounded-bl-2xl" />
++            <div className="absolute bottom-4 right-4 w-16 h-16 border-b-2 border-r-2 border-[#c9a84c]/30 rounded-br-2xl" />
++
++            <div className="relative z-10">
++              {/* Spinning seal */}
++              <SpinningSeal />
++
++              {/* Stars */}
++              <div className="flex justify-center gap-1 mb-5">
++                {[...Array(5)].map((_, i) => (
++                  <Star key={i} className="w-4 h-4 fill-[#c9a84c] text-[#c9a84c]" />
++                ))}
+               </div>
+-              <div className="flex items-center gap-2 text-[#f5f0e8]">
+-                <CheckCircle2 className="w-5 h-5 text-[#c9a84c]" />
+-                <span className="font-body">Support until you pass</span>
++
++              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#f5f0e8] mb-6 leading-tight">
++                The CELTA{' '}
++                <span className="text-[#c9a84c]">Confidence</span>{' '}
++                Guarantee
++              </h2>
++
++              <p className="font-body text-lg md:text-xl text-[#a09890] mb-4 max-w-2xl mx-auto leading-relaxed">
++                Complete all 4 weeks and the mock teaching day. If you don&apos;t pass CELTA on
++                your first attempt, I&apos;ll provide additional 1-on-1 support at{' '}
++                <span className="text-[#c9a84c] font-semibold">no extra cost</span>{' '}
++                until you do.
++              </p>
++
++              <p className="font-body text-sm text-[#6b6560] mb-10 max-w-xl mx-auto">
++                This is not a marketing promise. It&apos;s a personal commitment from your instructor — the same one who answers your WhatsApp messages.
++              </p>
++
++              {/* Guarantee points */}
++              <div className="grid sm:grid-cols-2 gap-3 max-w-2xl mx-auto mb-8">
++                {guaranteePoints.map((point, i) => (
++                  <div key={i} className="flex items-center gap-3 bg-white/5 border border-white/8 rounded-xl px-4 py-3 text-left">
++                    <CheckCircle2 className="w-5 h-5 text-[#c9a84c] flex-shrink-0" />
++                    <span className="font-body text-sm text-[#f5f0e8]">{point}</span>
++                  </div>
++                ))}
+               </div>
+-              <div className="flex items-center gap-2 text-[#f5f0e8]">
+-                <CheckCircle2 className="w-5 h-5 text-[#c9a84c]" />
+-                <span className="font-body">No extra cost</span>
++
++              {/* Divider */}
++              <div className="flex items-center gap-4 max-w-xs mx-auto">
++                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#c9a84c]/40" />
++                <span className="font-body text-xs text-[#6b6560] uppercase tracking-widest">Our word is our bond</span>
++                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#c9a84c]/40" />
+               </div>
+             </div>
+           </div>
+diff --git a/src/components/landing/HeroSection.tsx b/src/components/landing/HeroSection.tsx
+index a521462..4ce48e9 100755
+--- a/src/components/landing/HeroSection.tsx
++++ b/src/components/landing/HeroSection.tsx
+@@ -3,26 +3,26 @@
+ import { Button } from '@/components/ui/button'
+ import { 
+   Users, 
+-  Target, 
+   Star, 
+   MessageCircle, 
+   Award, 
+-  Play
++  Play,
++  ChevronDown,
++  TrendingUp,
++  Globe
+ } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ import { getWhatsAppLink } from './constants'
+ 
+-// Credential Badge Component
+ function CredentialBadge({ text }: { text: string }) {
+   return (
+-    <div className="inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-sm border border-[#d4cdc0]">
++    <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-[#d4cdc0] hover:border-[#c9a84c] transition-colors duration-200">
+       <Award className="w-3.5 h-3.5 text-[#c9a84c]" />
+-      <span className="font-body text-xs text-[#0e0c0a]">{text}</span>
++      <span className="font-body text-xs text-[#0e0c0a] font-medium">{text}</span>
+     </div>
+   )
+ }
+ 
+-// Star Rating Component
+ function StarRating({ rating, reviews }: { rating: number; reviews: number }) {
+   return (
+     <div className="flex items-center gap-2 justify-center">
+@@ -31,34 +31,45 @@ function StarRating({ rating, reviews }: { rating: number; reviews: number }) {
+           <Star key={star} className="w-4 h-4 fill-[#c9a84c] text-[#c9a84c]" />
+         ))}
+       </div>
+-      <span className="font-body text-sm font-semibold text-[#0e0c0a]">{rating}</span>
+-      <span className="font-body text-xs text-[#6b6560]">— Based on {reviews} reviews</span>
++      <span className="font-body text-sm font-bold text-[#0e0c0a]">{rating}</span>
++      <span className="font-body text-xs text-[#6b6560]">({reviews} reviews)</span>
+     </div>
+   )
+ }
+ 
+-// Social Proof Avatar
+-function SocialAvatar({ initials }: { initials: string }) {
++function SocialAvatar({ initials, delay = 0 }: { initials: string; delay?: number }) {
+   return (
+-    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center text-white text-xs font-bold border-2 border-white -ml-2 first:ml-0">
++    <div 
++      className="w-9 h-9 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center text-white text-xs font-bold border-2 border-white -ml-2 first:ml-0 shadow-md"
++      style={{ animationDelay: `${delay}s` }}
++    >
+       {initials}
+     </div>
+   )
+ }
+ 
+-// Instructor Card Component
+ function InstructorCard() {
+   return (
+     <div className="relative">
+-      <div className="absolute inset-0 bg-gradient-to-br from-[#c9a84c]/20 to-[#b85c38]/20 rounded-3xl transform rotate-3" />
+-      <div className="relative bg-white rounded-3xl shadow-2xl p-6 md:p-8 border border-[#d4cdc0]">
++      {/* Background glow layers */}
++      <div className="absolute inset-0 bg-gradient-to-br from-[#c9a84c]/20 to-[#b85c38]/15 rounded-3xl transform rotate-2 blur-sm" />
++      <div className="absolute inset-0 bg-gradient-to-tl from-[#b85c38]/10 to-transparent rounded-3xl transform -rotate-1" />
++      
++      {/* Main card */}
++      <div className="relative bg-white rounded-3xl shadow-2xl p-6 md:p-8 border border-[#d4cdc0]/80 overflow-hidden">
++        {/* Subtle dot pattern top right */}
++        <div className="absolute top-0 right-0 w-32 h-32 dot-pattern opacity-40 rounded-3xl" />
++        
+         {/* Header */}
+-        <div className="text-center mb-4">
+-          <p className="font-body text-xs text-[#6b6560] uppercase tracking-wider mb-3">Your Instructor</p>
++        <div className="text-center mb-5 relative z-10">
++          <div className="inline-flex items-center gap-1.5 bg-[#c9a84c]/10 px-3 py-1 rounded-full mb-4">
++            <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
++            <span className="font-body text-xs text-[#6b6560] uppercase tracking-widest font-medium">Your Instructor</span>
++          </div>
+           
+-          {/* Avatar */}
+-          <div className="relative inline-flex items-center justify-center mb-3">
+-            <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] p-1">
++          {/* Avatar with glow ring */}
++          <div className="relative inline-flex items-center justify-center mb-4">
++            <div className="w-32 h-32 rounded-full p-1 animate-glow-ring" style={{ background: 'linear-gradient(135deg, #c9a84c, #b85c38, #c9a84c)' }}>
+               <div className="w-full h-full rounded-full overflow-hidden">
+                 <img 
+                   src="/instructor.jpeg" 
+@@ -67,22 +78,27 @@ function InstructorCard() {
+                 />
+               </div>
+             </div>
+-            <div className="absolute -bottom-1 -right-1 bg-[#c9a84c] rounded-full p-1.5">
+-              <Award className="w-4 h-4 text-[#0e0c0a]" />
++            <div className="absolute -bottom-1 -right-1 bg-gradient-to-br from-[#c9a84c] to-[#b8973b] rounded-full p-2 shadow-lg">
++              <Award className="w-4 h-4 text-white" />
+             </div>
+           </div>
+           
+-          <h3 className="font-display text-xl font-bold text-[#0e0c0a]">Rachid Chfirra</h3>
+-          <p className="font-body text-sm text-[#b85c38]">CELTA Certified | DELTA Candidate</p>
++          <h3 className="font-display text-2xl font-bold text-[#0e0c0a]">Rachid Chfirra</h3>
++          <p className="font-body text-sm font-medium" style={{ color: '#b85c38' }}>CELTA Certified · DELTA Candidate</p>
++          
++          <div className="flex items-center justify-center gap-1.5 mt-1.5">
++            <Globe className="w-3 h-3 text-[#6b6560]" />
++            <span className="font-body text-xs text-[#6b6560]">Teaching in 5+ countries</span>
++          </div>
+         </div>
+         
+         {/* Star Rating */}
+-        <div className="mb-4">
++        <div className="mb-5">
+           <StarRating rating={4.9} reviews={38} />
+         </div>
+         
+         {/* Credential Tags */}
+-        <div className="flex flex-wrap gap-1.5 justify-center mb-4">
++        <div className="flex flex-wrap gap-2 justify-center mb-5">
+           <CredentialBadge text="CELTA Certified" />
+           <CredentialBadge text="TESOL" />
+           <CredentialBadge text="Train the Trainer" />
+@@ -90,44 +106,50 @@ function InstructorCard() {
+         </div>
+         
+         {/* Testimonial Quote */}
+-        <div className="bg-[#f5f0e8] rounded-xl p-4 mb-4">
+-          <p className="font-body text-sm text-[#0e0c0a] italic leading-relaxed">
+-            &ldquo;Passed first attempt. Rachid&apos;s approach is completely different from anything I&apos;d found online.&rdquo;
++        <div className="bg-gradient-to-br from-[#f5f0e8] to-[#e8e0d0] rounded-2xl p-4 mb-5 relative overflow-hidden">
++          <div className="absolute top-0 left-2 quote-mark-bg font-display leading-none">"</div>
++          <p className="font-body text-sm text-[#0e0c0a] italic leading-relaxed relative z-10">
++            Passed first attempt. Rachid&apos;s approach is completely different from anything I&apos;d found online.
+           </p>
+-          <div className="mt-2 pt-2 border-t border-[#d4cdc0]">
+-            <p className="font-body text-xs text-[#6b6560]">
+-              <span className="font-semibold text-[#0e0c0a]">Fatima Z., Casablanca</span> · CELTA Pass A
+-            </p>
++          <div className="mt-3 pt-3 border-t border-[#d4cdc0]">
++            <div className="flex items-center gap-2">
++              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center text-white text-xs font-bold">F</div>
++              <div>
++                <p className="font-body text-xs font-semibold text-[#0e0c0a]">Fatima Z., Casablanca</p>
++                <p className="font-body text-xs text-[#c9a84c] font-medium">✓ CELTA Pass A</p>
++              </div>
++            </div>
+           </div>
+         </div>
+         
+         {/* Social Proof Footer */}
+-        <div className="flex items-center justify-center gap-3 pt-2">
++        <div className="flex items-center justify-between pt-3 border-t border-[#d4cdc0]">
+           <div className="flex">
+             <SocialAvatar initials="FZ" />
+-            <SocialAvatar initials="AM" />
+-            <SocialAvatar initials="KH" />
+-            <SocialAvatar initials="YB" />
++            <SocialAvatar initials="AM" delay={0.1} />
++            <SocialAvatar initials="KH" delay={0.2} />
++            <SocialAvatar initials="YB" delay={0.3} />
++            <div className="w-9 h-9 rounded-full bg-[#e8e0d0] flex items-center justify-center text-[#6b6560] text-xs font-bold border-2 border-white -ml-2">+40</div>
++          </div>
++          <div className="text-right">
++            <p className="font-body text-xs text-[#0e0c0a] font-semibold">44 teachers</p>
++            <p className="font-body text-xs text-[#6b6560]">enrolled this month</p>
+           </div>
+-          <p className="font-body text-xs text-[#6b6560]">
+-            <span className="font-semibold text-[#0e0c0a]">44 teachers</span> enrolled this month
+-          </p>
+         </div>
+       </div>
+     </div>
+   )
+ }
+ 
+-// Stat Item Component
+-function StatItem({ number, label, showDivider = true }: { number: string; label: string; showDivider?: boolean }) {
++function StatItem({ number, label, icon: Icon, showDivider = true }: { number: string; label: string; icon?: any; showDivider?: boolean }) {
+   return (
+     <div className="flex items-center">
+-      <div className="text-center px-4 sm:px-6">
+-        <div className="font-display text-2xl md:text-3xl font-bold text-[#0e0c0a]">{number}</div>
+-        <div className="font-body text-xs md:text-sm text-[#6b6560] mt-1">{label}</div>
++      <div className="text-center px-4 sm:px-5">
++        <div className="font-display text-2xl md:text-3xl font-bold text-[#0e0c0a] stat-number">{number}</div>
++        <div className="font-body text-xs text-[#6b6560] mt-0.5">{label}</div>
+       </div>
+       {showDivider && (
+-        <div className="h-10 w-px bg-[#d4cdc0]" />
++        <div className="h-10 w-px bg-gradient-to-b from-transparent via-[#d4cdc0] to-transparent" />
+       )}
+     </div>
+   )
+@@ -136,39 +158,58 @@ function StatItem({ number, label, showDivider = true }: { number: string; label
+ export function HeroSection() {
+   return (
+     <>
+-      <header className="relative overflow-hidden pt-16">
+-        {/* Decorative background */}
+-        <div className="absolute inset-0 bg-gradient-to-br from-[#e8e0d0] via-[#f5f0e8] to-[#e8e0d0]" />
+-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#c9a84c]/10 rounded-full blur-3xl" />
+-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#b85c38]/10 rounded-full blur-3xl" />
++      <header className="relative overflow-hidden pt-16 mesh-gradient">
++        {/* Rich layered background */}
++        <div className="absolute inset-0 bg-gradient-to-br from-[#ede5d8] via-[#f5f0e8] to-[#e8e0d0]" />
++        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a84c]/8 rounded-full blur-3xl" />
++        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#b85c38]/8 rounded-full blur-3xl" />
++        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#c9a84c]/4 rounded-full blur-3xl" />
++        
++        {/* Dot pattern overlay */}
++        <div className="absolute inset-0 dot-pattern opacity-30" />
+         
+-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
+-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
++        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24">
++          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+             {/* Hero Copy */}
+             <div className="text-center lg:text-left">
+               {/* Trust Badge */}
+               <AnimatedSection className="stagger-1">
+                 <div className="flex justify-center lg:justify-start mb-6">
+-                  <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-[#c9a84c] shadow-sm">
+-                    <div className="w-2 h-2 rounded-full bg-[#c9a84c]" />
+-                    <span className="font-body text-sm text-[#0e0c0a]">Trusted by <span className="font-semibold">47+</span> Moroccan teachers</span>
++                  <div className="inline-flex items-center gap-2.5 glass px-4 py-2.5 rounded-full shadow-md border border-[#c9a84c]/40">
++                    <div className="flex -space-x-1">
++                      {['FZ','AM','KH'].map(i => (
++                        <div key={i} className="w-5 h-5 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center text-white text-[8px] font-bold border border-white">{i[0]}</div>
++                      ))}
++                    </div>
++                    <span className="font-body text-sm text-[#0e0c0a]">Trusted by <span className="font-bold text-[#c9a84c]">47+</span> Moroccan teachers</span>
++                    <TrendingUp className="w-3.5 h-3.5 text-[#c9a84c]" />
+                   </div>
+                 </div>
+               </AnimatedSection>
+               
+               {/* Headline */}
+               <AnimatedSection className="stagger-2">
+-                <h1 className="font-display text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-[#0e0c0a] leading-tight mb-4">
+-                  Pass <span className="text-[#c9a84c]">CELTA</span> on your first attempt
++                <h1 className="font-display text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-[#0e0c0a] leading-[1.1] mb-4">
++                  Pass{' '}
++                  <span className="gold-shimmer">CELTA</span>
++                  {' '}on your<br />
++                  <span className="relative">
++                    first attempt
++                    <svg className="absolute -bottom-1 left-0 w-full" height="6" viewBox="0 0 300 6" preserveAspectRatio="none">
++                      <path d="M0 3 Q75 6 150 3 Q225 0 300 3" stroke="#c9a84c" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
++                    </svg>
++                  </span>
+                 </h1>
+               </AnimatedSection>
+               
+               {/* Subtext */}
+               <AnimatedSection className="stagger-3">
+-                <p className="font-body text-base md:text-lg text-[#6b6560] mb-8 max-w-xl mx-auto lg:mx-0">
++                <p className="font-body text-base md:text-lg text-[#6b6560] mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                   Even if you&apos;ve never taught before.{' '}
+-                  <span className="text-[#0e0c0a] font-semibold">94% of our students pass first time</span> — 
+-                  the difference is preparing with someone who&apos;s already done it.
++                  <span className="text-[#0e0c0a] font-semibold bg-[#c9a84c]/10 px-1.5 py-0.5 rounded">
++                    94% of our students pass first time
++                  </span>{' '}
++                  — the difference is preparing with someone who&apos;s already done it.
+                 </p>
+               </AnimatedSection>
+               
+@@ -178,7 +219,7 @@ export function HeroSection() {
+                   <Button
+                     asChild
+                     size="lg"
+-                    className="font-body font-semibold text-base px-6 py-6 bg-[#c9a84c] text-white hover:bg-[#b8973b]"
++                    className="btn-shine font-body font-semibold text-base px-7 py-6 bg-gradient-to-r from-[#c9a84c] to-[#b8973b] text-white hover:from-[#b8973b] hover:to-[#a8872b] shadow-lg shadow-[#c9a84c]/30 hover:shadow-xl hover:shadow-[#c9a84c]/40 transition-all duration-300"
+                   >
+                     <a href="/course">
+                       <Play className="w-4 h-4 mr-2" />
+@@ -189,7 +230,7 @@ export function HeroSection() {
+                     asChild
+                     size="lg"
+                     variant="outline"
+-                    className="font-body font-semibold text-base px-6 py-6 border-[#0e0c0a] text-[#0e0c0a] hover:bg-[#0e0c0a] hover:text-white"
++                    className="font-body font-semibold text-base px-7 py-6 border-2 border-[#0e0c0a] text-[#0e0c0a] hover:bg-[#0e0c0a] hover:text-white transition-all duration-300"
+                   >
+                     <a href={getWhatsAppLink("Hi Rachid, I'd like a free consultation about CELTA prep")} target="_blank" rel="noopener noreferrer">
+                       <MessageCircle className="w-4 h-4 mr-2" />
+@@ -202,18 +243,27 @@ export function HeroSection() {
+               {/* Stats Row */}
+               <AnimatedSection className="stagger-5">
+                 <div className="flex justify-center lg:justify-start">
+-                  <div className="inline-flex items-center bg-white rounded-xl border border-[#d4cdc0] shadow-sm">
++                  <div className="inline-flex items-center glass rounded-2xl border border-white/60 shadow-lg overflow-hidden">
+                     <StatItem number="47" label="teachers trained" />
+                     <StatItem number="94%" label="pass rate" />
+-                    <StatItem number="4.9/5" label="rating" showDivider={false} />
++                    <StatItem number="4.9★" label="rating" showDivider={false} />
+                   </div>
+                 </div>
+               </AnimatedSection>
++              
++              {/* Scroll hint */}
++              <AnimatedSection className="stagger-5">
++                <div className="flex justify-center lg:justify-start mt-10 opacity-40">
++                  <ChevronDown className="w-5 h-5 text-[#6b6560] animate-bounce" />
++                </div>
++              </AnimatedSection>
+             </div>
+             
+             {/* Hero Visual - Instructor Card */}
+             <AnimatedSection className="stagger-2">
+-              <InstructorCard />
++              <div className="animate-float">
++                <InstructorCard />
++              </div>
+             </AnimatedSection>
+           </div>
+         </div>
+diff --git a/src/components/landing/InstructorSection.tsx b/src/components/landing/InstructorSection.tsx
+index 0d53570..45edc32 100755
+--- a/src/components/landing/InstructorSection.tsx
++++ b/src/components/landing/InstructorSection.tsx
+@@ -1,86 +1,74 @@
+ 'use client'
+ 
+ import { useState } from 'react'
+-import { Badge } from '@/components/ui/badge'
+-import { Award, Clock, Play, X } from 'lucide-react'
++import { Award, Clock, Play, X, BookOpen, Globe, Linkedin } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ 
+-// Credential Badge Component
+-function CredentialBadge({ text }: { text: string }) {
+-  return (
+-    <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md border border-[#d4cdc0]">
+-      <Award className="w-4 h-4 text-[#c9a84c]" />
+-      <span className="font-body text-sm text-[#0e0c0a]">{text}</span>
+-    </div>
+-  )
+-}
++const credentials = [
++  { label: 'CELTA Certified', icon: Award },
++  { label: 'TESOL Certificate', icon: BookOpen },
++  { label: 'Train the Trainer', icon: BookOpen },
++  { label: 'DELTA Module 2 Candidate', icon: Award },
++  { label: 'B.A. Linguistics', icon: BookOpen },
++]
+ 
+-// Instructor Avatar Component
+-function InstructorAvatar() {
+-  return (
+-    <div className="relative inline-flex items-center justify-center">
+-      <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] p-1">
+-        <div className="w-full h-full rounded-full overflow-hidden">
+-          <img 
+-            src="/instructor.jpeg" 
+-            alt="Rachid Chfirra - CELTA Prep Instructor"
+-            className="w-full h-full object-cover"
+-          />
+-        </div>
+-      </div>
+-      <div className="absolute -bottom-2 -right-2 bg-[#c9a84c] rounded-full p-2">
+-        <Award className="w-5 h-5 text-[#0e0c0a]" />
+-      </div>
+-    </div>
+-  )
+-}
+-
+-// Video Introduction Component
+ function VideoIntroduction() {
+   const [isPlaying, setIsPlaying] = useState(false)
+-
+-  // YouTube video ID from https://youtu.be/usqsM5IIoqo
+   const videoId = 'usqsM5IIoqo'
+ 
+   return (
+-    <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#d4cdc0] bg-[#0e0c0a]">
++    <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#2a2725] bg-[#0e0c0a]">
++      {/* Gold border glow */}
++      <div className="absolute inset-0 rounded-3xl ring-1 ring-[#c9a84c]/20 pointer-events-none z-20" />
++
+       <div className="aspect-video relative">
+         {!isPlaying ? (
+           <>
+-            <div className="absolute inset-0 bg-gradient-to-br from-[#1a1816] to-[#0e0c0a]" />
+-            {/* Video thumbnail background */}
+-            <div className="absolute inset-0 opacity-30">
+-              <img 
++            {/* Thumbnail */}
++            <div className="absolute inset-0 bg-gradient-to-br from-[#1a1410] to-[#0e0c0a]" />
++            <div className="absolute inset-0 opacity-25">
++              <img
+                 src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                 alt="Video thumbnail"
+                 className="w-full h-full object-cover"
+-                onError={(e) => {
+-                  // Fallback to lower quality thumbnail
+-                  e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+-                }}
++                onError={(e) => { e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` }}
+               />
+             </div>
+-            <div className="absolute inset-0 flex flex-col items-center justify-center">
+-              <div className="mb-4">
+-                <InstructorAvatar />
++            {/* Dot pattern overlay */}
++            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)', backgroundSize: '20px 20px' }} />
++
++            <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
++              {/* Instructor photo */}
++              <div className="w-20 h-20 rounded-full p-0.5 animate-glow-ring" style={{ background: 'linear-gradient(135deg, #c9a84c, #b85c38)' }}>
++                <div className="w-full h-full rounded-full overflow-hidden">
++                  <img src="/instructor.jpeg" alt="Rachid Chfirra" className="w-full h-full object-cover" />
++                </div>
+               </div>
++
++              {/* Play button */}
+               <button
+                 onClick={() => setIsPlaying(true)}
+-                className="w-20 h-20 rounded-full bg-[#c9a84c] flex items-center justify-center hover:bg-[#b8973b] transition-all duration-300 hover:scale-110 shadow-lg group"
++                className="group relative w-18 h-18"
++                aria-label="Play video"
+               >
+-                <Play className="w-8 h-8 text-[#0e0c0a] ml-1 group-hover:scale-110 transition-transform" />
++                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b8973b] flex items-center justify-center shadow-2xl shadow-[#c9a84c]/30 group-hover:shadow-[#c9a84c]/50 group-hover:scale-110 transition-all duration-300">
++                  <Play className="w-7 h-7 text-[#0e0c0a] ml-1" fill="currentColor" />
++                </div>
++                {/* Ping rings */}
++                <span className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-ping" />
+               </button>
+-              <p className="font-body text-[#f5f0e8] mt-4 text-sm">
+-                Watch Rachid&apos;s Introduction
+-              </p>
+-              <div className="flex items-center gap-2 mt-2 text-[#a09890] text-xs font-body">
+-                <Clock className="w-3 h-3" />
+-                <span>2 min</span>
++
++              <div className="text-center">
++                <p className="font-body text-[#f5f0e8] text-sm font-semibold">Watch Rachid&apos;s Introduction</p>
++                <div className="flex items-center justify-center gap-1.5 mt-1 text-[#a09890]">
++                  <Clock className="w-3 h-3" />
++                  <span className="font-body text-xs">2 min</span>
++                </div>
+               </div>
+             </div>
+           </>
+         ) : (
+-          <div className="absolute inset-0 bg-[#0e0c0a]">
++          <div className="absolute inset-0">
+             <iframe
+               src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+               title="Rachid Chfirra - CELTA Prep Morocco Introduction"
+@@ -90,9 +78,9 @@ function VideoIntroduction() {
+             />
+             <button
+               onClick={() => setIsPlaying(false)}
+-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-[#0e0c0a]/80 flex items-center justify-center hover:bg-[#0e0c0a] transition-colors"
++              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#0e0c0a]/80 backdrop-blur-sm flex items-center justify-center hover:bg-[#0e0c0a] transition-colors border border-[#2a2725]"
+             >
+-              <X className="w-5 h-5 text-[#f5f0e8]" />
++              <X className="w-4 h-4 text-[#f5f0e8]" />
+             </button>
+           </div>
+         )}
+@@ -103,50 +91,59 @@ function VideoIntroduction() {
+ 
+ export function InstructorSection() {
+   return (
+-    <section className="py-16 md:py-24">
+-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section className="py-16 md:py-28 bg-[#f5f0e8] relative overflow-hidden">
++      <div className="absolute inset-0 dot-pattern opacity-20" />
++      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a84c]/5 rounded-full blur-3xl" />
++
++      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+-            {/* Video Side */}
++          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
++            {/* Video */}
+             <div className="order-2 lg:order-1">
+               <VideoIntroduction />
+             </div>
+-            
+-            {/* Story Side */}
++
++            {/* Story */}
+             <div className="order-1 lg:order-2">
+-              <Badge className="mb-4 bg-[#c9a84c]/20 text-[#c9a84c] border-[#c9a84c] font-body">
+-                Your Instructor
+-              </Badge>
+-              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0e0c0a] mb-6">
+-                I went through CELTA alone. So you don&apos;t have to.
++              <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/30 px-4 py-1.5 rounded-full mb-6">
++                <span className="font-body text-xs text-[#c9a84c] uppercase tracking-widest font-semibold">Your Instructor</span>
++              </div>
++
++              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0e0c0a] mb-6 leading-tight">
++                I went through CELTA alone.{' '}
++                <span className="text-[#b85c38]">So you don&apos;t have to.</span>
+               </h2>
+-              <div className="font-body text-[#6b6560] space-y-4 text-lg">
++
++              <div className="font-body text-[#6b6560] space-y-4 leading-relaxed mb-8">
+                 <p>
+-                  When I started my CELTA journey, there was no one in Morocco who could tell me what to expect. 
+-                  No prep course. No local mentor. No one who understood what it meant to be a Moroccan teacher 
++                  When I started my CELTA journey, there was no one in Morocco who could tell me what to expect.
++                  No prep course. No local mentor. No one who understood what it meant to be a Moroccan teacher
+                   facing an international assessment.
+                 </p>
+                 <p>
+-                  I passed — but not without struggle. I made mistakes that could have been avoided. 
+-                  I felt anxieties that could have been dissolved with proper preparation.
+-                </p>
+-                <p>
+-                  After teaching across Morocco and Vietnam, earning my TESOL, completing Train the Trainer, 
+-                  and now pursuing my DELTA Module 2, I&apos;ve spent years understanding exactly what makes 
+-                  CELTA challenging — and how to make it achievable for teachers like us.
++                  I passed — but not without struggle. I made mistakes that could have been avoided.
++                  I felt anxieties that proper preparation would have dissolved.
+                 </p>
+                 <p className="text-[#0e0c0a] font-semibold">
+-                  I built CELTA Prep Morocco because I want every Moroccan teacher after me to have what I didn&apos;t: 
++                  I built CELTA Prep Morocco so every Moroccan teacher after me has what I didn&apos;t:
+                   preparation, support, and the confidence that comes from knowing exactly what you&apos;re walking into.
+                 </p>
+               </div>
+-              
+-              <div className="mt-8 flex flex-wrap gap-2">
+-                <CredentialBadge text="CELTA Certified" />
+-                <CredentialBadge text="TESOL Certificate" />
+-                <CredentialBadge text="Train the Trainer" />
+-                <CredentialBadge text="DELTA Module 2 Candidate" />
+-                <CredentialBadge text="B.A. Linguistics" />
++
++              {/* Credentials grid */}
++              <div className="flex flex-wrap gap-2 mb-6">
++                {credentials.map((cred, i) => (
++                  <div key={i} className="inline-flex items-center gap-2 glass border border-[#d4cdc0] px-3 py-1.5 rounded-full hover:border-[#c9a84c]/50 transition-colors duration-200">
++                    <Award className="w-3.5 h-3.5 text-[#c9a84c]" />
++                    <span className="font-body text-xs text-[#0e0c0a] font-medium">{cred.label}</span>
++                  </div>
++                ))}
++              </div>
++
++              {/* Location row */}
++              <div className="flex items-center gap-3 pt-4 border-t border-[#d4cdc0]">
++                <Globe className="w-4 h-4 text-[#6b6560]" />
++                <span className="font-body text-sm text-[#6b6560]">Based in Vietnam · Teaching since 2019 · Moroccan 🇲🇦</span>
+               </div>
+             </div>
+           </div>
+diff --git a/src/components/landing/MobileNav.tsx b/src/components/landing/MobileNav.tsx
+index 233008e..887ae37 100755
+--- a/src/components/landing/MobileNav.tsx
++++ b/src/components/landing/MobileNav.tsx
+@@ -2,7 +2,7 @@
+ 
+ import { useState, useEffect } from 'react'
+ import { Button } from '@/components/ui/button'
+-import { Menu, X, MessageCircle } from 'lucide-react'
++import { Menu, X, MessageCircle, BookOpen } from 'lucide-react'
+ import { getWhatsAppLink } from './constants'
+ 
+ const navLinks = [
+@@ -14,16 +14,19 @@ const navLinks = [
+ export function MobileNav() {
+   const [isOpen, setIsOpen] = useState(false)
+   const [isScrolled, setIsScrolled] = useState(false)
++  const [scrollProgress, setScrollProgress] = useState(0)
+ 
+   useEffect(() => {
+     const handleScroll = () => {
+-      setIsScrolled(window.scrollY > 50)
++      const scrollY = window.scrollY
++      const docHeight = document.documentElement.scrollHeight - window.innerHeight
++      setIsScrolled(scrollY > 60)
++      setScrollProgress(docHeight > 0 ? (scrollY / docHeight) * 100 : 0)
+     }
+-    window.addEventListener('scroll', handleScroll)
++    window.addEventListener('scroll', handleScroll, { passive: true })
+     return () => window.removeEventListener('scroll', handleScroll)
+   }, [])
+ 
+-  // Close menu on escape key
+   useEffect(() => {
+     const handleEscape = (e: KeyboardEvent) => {
+       if (e.key === 'Escape') setIsOpen(false)
+@@ -32,49 +35,47 @@ export function MobileNav() {
+     return () => document.removeEventListener('keydown', handleEscape)
+   }, [])
+ 
+-  // Prevent body scroll when menu is open
+   useEffect(() => {
+-    if (isOpen) {
+-      document.body.style.overflow = 'hidden'
+-    } else {
+-      document.body.style.overflow = ''
+-    }
+-    return () => {
+-      document.body.style.overflow = ''
+-    }
++    document.body.style.overflow = isOpen ? 'hidden' : ''
++    return () => { document.body.style.overflow = '' }
+   }, [isOpen])
+ 
+   return (
+     <>
+       {/* Header */}
+-      <header 
++      <header
+         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+-          isScrolled 
+-            ? 'bg-white/95 backdrop-blur-sm shadow-md' 
++          isScrolled
++            ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-[#d4cdc0]/50'
+             : 'bg-transparent'
+         }`}
+       >
++        {/* Scroll progress bar */}
++        <div
++          className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#c9a84c] to-[#b85c38] transition-all duration-100"
++          style={{ width: `${scrollProgress}%` }}
++        />
++
+         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div className="flex items-center justify-between h-16">
+             {/* Logo */}
+-            <a href="/" className="flex items-center gap-2">
+-              <img 
+-                src="/logo.svg?v=2" 
+-                alt="CELTA Prep Morocco" 
+-                className="h-10 w-auto"
+-              />
+-              <span className="font-display font-bold text-[#0e0c0a] text-sm hidden sm:block">
+-                CELTA Prep Morocco
+-              </span>
++            <a href="/" className="flex items-center gap-2.5 group">
++              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center shadow-md group-hover:shadow-[#c9a84c]/40 transition-shadow duration-300">
++                <BookOpen className="w-4 h-4 text-white" strokeWidth={2} />
++              </div>
++              <div className="flex flex-col leading-none">
++                <span className="font-display font-bold text-[#0e0c0a] text-sm tracking-wide">CELTA Prep</span>
++                <span className="font-body text-[#c9a84c] text-[10px] font-semibold uppercase tracking-widest">Morocco</span>
++              </div>
+             </a>
+ 
+             {/* Desktop Navigation */}
+-            <nav className="hidden md:flex items-center gap-6">
++            <nav className="hidden md:flex items-center gap-7">
+               {navLinks.map((link) => (
+                 <a
+                   key={link.href}
+                   href={link.href}
+-                  className="font-body text-sm text-[#6b6560] hover:text-[#0e0c0a] transition-colors"
++                  className="font-body text-sm text-[#6b6560] hover:text-[#0e0c0a] transition-colors hover-underline"
+                 >
+                   {link.label}
+                 </a>
+@@ -82,11 +83,11 @@ export function MobileNav() {
+               <Button
+                 asChild
+                 size="sm"
+-                className="bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b] font-body"
++                className="btn-shine bg-gradient-to-r from-[#c9a84c] to-[#b8973b] text-[#0e0c0a] hover:from-[#b8973b] hover:to-[#a8872b] font-body font-semibold shadow-md hover:shadow-lg hover:shadow-[#c9a84c]/30 transition-all duration-300"
+               >
+                 <a href={getWhatsAppLink("Hi Rachid, I want to learn more about CELTA Prep Morocco")} target="_blank" rel="noopener noreferrer">
+-                  <MessageCircle className="w-4 h-4 mr-2" />
+-                  Contact
++                  <MessageCircle className="w-3.5 h-3.5 mr-1.5" />
++                  WhatsApp
+                 </a>
+               </Button>
+             </nav>
+@@ -94,54 +95,82 @@ export function MobileNav() {
+             {/* Mobile Menu Button */}
+             <button
+               onClick={() => setIsOpen(!isOpen)}
+-              className="md:hidden w-10 h-10 rounded-lg flex items-center justify-center hover:bg-[#e8e0d0] transition-colors"
++              className={`md:hidden w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${
++                isOpen
++                  ? 'bg-[#0e0c0a] text-white'
++                  : 'hover:bg-[#e8e0d0] text-[#0e0c0a]'
++              }`}
+               aria-label={isOpen ? 'Close menu' : 'Open menu'}
+               aria-expanded={isOpen}
+             >
+-              {isOpen ? (
+-                <X className="w-6 h-6 text-[#0e0c0a]" />
+-              ) : (
+-                <Menu className="w-6 h-6 text-[#0e0c0a]" />
+-              )}
++              <div className="relative w-5 h-5">
++                <span className={`absolute inset-0 flex items-center justify-center transition-all duration-200 ${isOpen ? 'opacity-100 rotate-0' : 'opacity-0 rotate-90'}`}>
++                  <X className="w-5 h-5" />
++                </span>
++                <span className={`absolute inset-0 flex items-center justify-center transition-all duration-200 ${isOpen ? 'opacity-0 -rotate-90' : 'opacity-100 rotate-0'}`}>
++                  <Menu className="w-5 h-5" />
++                </span>
++              </div>
+             </button>
+           </div>
+         </div>
+       </header>
+ 
+-      {/* Mobile Menu Overlay */}
+-      {isOpen && (
+-        <div 
+-          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+-          onClick={() => setIsOpen(false)}
+-        />
+-      )}
++      {/* Backdrop */}
++      <div
++        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden transition-opacity duration-300 ${
++          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
++        }`}
++        onClick={() => setIsOpen(false)}
++      />
+ 
+-      {/* Mobile Menu */}
+-      <div 
+-        className={`fixed top-16 right-0 bottom-0 w-72 max-w-[80vw] z-40 bg-white shadow-2xl transform transition-transform duration-300 md:hidden ${
++      {/* Mobile Menu Panel */}
++      <div
++        className={`fixed top-0 right-0 bottom-0 w-72 max-w-[85vw] z-50 md:hidden transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+           isOpen ? 'translate-x-0' : 'translate-x-full'
+         }`}
+       >
+-        <nav className="p-6 space-y-6">
+-          {navLinks.map((link) => (
+-            <a
+-              key={link.href}
+-              href={link.href}
++        <div className="h-full bg-white shadow-2xl flex flex-col">
++          {/* Panel header */}
++          <div className="flex items-center justify-between px-6 h-16 border-b border-[#e8e0d0]">
++            <div className="flex items-center gap-2">
++              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center">
++                <BookOpen className="w-3 h-3 text-white" strokeWidth={2} />
++              </div>
++              <span className="font-display font-bold text-[#0e0c0a] text-sm">CELTA Prep Morocco</span>
++            </div>
++            <button
+               onClick={() => setIsOpen(false)}
+-              className="block font-body text-lg text-[#0e0c0a] hover:text-[#c9a84c] transition-colors py-2 border-b border-[#e8e0d0]"
++              className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#e8e0d0] transition-colors"
+             >
+-              {link.label}
+-            </a>
+-          ))}
+-          
+-          <div className="pt-4 space-y-3">
++              <X className="w-4 h-4 text-[#6b6560]" />
++            </button>
++          </div>
++
++          {/* Nav links */}
++          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
++            {navLinks.map((link) => (
++              <a
++                key={link.href}
++                href={link.href}
++                onClick={() => setIsOpen(false)}
++                className="flex items-center justify-between font-body text-base text-[#0e0c0a] hover:text-[#c9a84c] hover:bg-[#f5f0e8] transition-all duration-200 px-4 py-3.5 rounded-xl group"
++              >
++                {link.label}
++                <span className="text-[#d4cdc0] group-hover:text-[#c9a84c] transition-colors">→</span>
++              </a>
++            ))}
++          </nav>
++
++          {/* CTA buttons */}
++          <div className="px-4 pb-8 pt-4 border-t border-[#e8e0d0] space-y-3">
+             <Button
+               asChild
+-              className="w-full bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b] font-body"
++              className="w-full btn-shine bg-gradient-to-r from-[#c9a84c] to-[#b8973b] text-[#0e0c0a] font-body font-semibold py-6"
+             >
+-              <a 
+-                href={getWhatsAppLink("Hi Rachid, I want to learn more about CELTA Prep Morocco")} 
+-                target="_blank" 
++              <a
++                href={getWhatsAppLink("Hi Rachid, I want to learn more about CELTA Prep Morocco")}
++                target="_blank"
+                 rel="noopener noreferrer"
+                 onClick={() => setIsOpen(false)}
+               >
+@@ -152,14 +181,17 @@ export function MobileNav() {
+             <Button
+               asChild
+               variant="outline"
+-              className="w-full border-[#0e0c0a] text-[#0e0c0a] hover:bg-[#0e0c0a] hover:text-white font-body"
++              className="w-full border-2 border-[#0e0c0a] text-[#0e0c0a] hover:bg-[#0e0c0a] hover:text-white font-body font-semibold py-6 transition-all duration-200"
+             >
+               <a href="/course" onClick={() => setIsOpen(false)}>
+                 Preview Course
+               </a>
+             </Button>
++            <p className="text-center font-body text-xs text-[#a09890] pt-1">
++              Starting at $79 USD · Payment plans available
++            </p>
+           </div>
+-        </nav>
++        </div>
+       </div>
+     </>
+   )
+diff --git a/src/components/landing/MobileStickyCTA.tsx b/src/components/landing/MobileStickyCTA.tsx
+index 4cf9da2..d015141 100755
+--- a/src/components/landing/MobileStickyCTA.tsx
++++ b/src/components/landing/MobileStickyCTA.tsx
+@@ -2,62 +2,90 @@
+ 
+ import { useEffect, useState } from 'react'
+ import { Button } from '@/components/ui/button'
+-import { MessageCircle, ChevronUp } from 'lucide-react'
++import { MessageCircle, ChevronUp, ArrowRight } from 'lucide-react'
+ import { getWhatsAppLink } from './constants'
+ 
+ export function MobileStickyCTA() {
+   const [isVisible, setIsVisible] = useState(false)
+   const [isAtBottom, setIsAtBottom] = useState(false)
++  const [pulsed, setPulsed] = useState(false)
+ 
+   useEffect(() => {
+     const handleScroll = () => {
+       const scrollY = window.scrollY
+       const docHeight = document.documentElement.scrollHeight
+       const winHeight = window.innerHeight
+-      
++
+       setIsVisible(scrollY > 500)
+       setIsAtBottom(scrollY + winHeight > docHeight - 200)
+     }
+-
+-    window.addEventListener('scroll', handleScroll)
++    window.addEventListener('scroll', handleScroll, { passive: true })
+     return () => window.removeEventListener('scroll', handleScroll)
+   }, [])
+ 
+-  if (!isVisible) return null
++  // Pulse the CTA button once after appearing
++  useEffect(() => {
++    if (isVisible && !pulsed) {
++      const t = setTimeout(() => setPulsed(true), 800)
++      return () => clearTimeout(t)
++    }
++  }, [isVisible, pulsed])
+ 
+   return (
+-    <div 
+-      className={`fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[#0e0c0a]/95 backdrop-blur-sm shadow-2xl border-t border-[#2a2725] transform transition-transform duration-300 safe-area-inset-bottom ${
+-        isVisible ? 'translate-y-0' : 'translate-y-full'
+-      }`}
+-    >
+-      <div className="px-4 py-3 flex items-center justify-between gap-3">
+-        <div className="flex-1 min-w-0">
+-          <p className="font-body text-white text-sm font-semibold truncate">CELTA Prep Morocco</p>
+-          <p className="font-body text-[#c9a84c] text-xs">Starting at $80 USD</p>
++    <>
++      {/* Scroll to top floating button */}
++      <button
++        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
++        className={`fixed bottom-24 right-4 z-40 md:hidden w-10 h-10 rounded-full bg-white border border-[#d4cdc0] shadow-lg flex items-center justify-center text-[#6b6560] hover:border-[#c9a84c] hover:text-[#c9a84c] transition-all duration-300 ${
++          isAtBottom ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none'
++        }`}
++        aria-label="Scroll to top"
++      >
++        <ChevronUp className="w-5 h-5" />
++      </button>
++
++      {/* Sticky bottom bar */}
++      <div
++        className={`fixed bottom-0 left-0 right-0 z-40 md:hidden transition-all duration-500 ${
++          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
++        }`}
++      >
++        {/* Gradient fade above bar */}
++        <div className="h-6 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
++
++        <div className="bg-[#0e0c0a]/96 backdrop-blur-md border-t border-[#2a2725] px-4 py-3 safe-area-inset-bottom">
++          <div className="flex items-center gap-3 max-w-md mx-auto">
++            {/* Left info */}
++            <div className="flex-1 min-w-0">
++              <p className="font-body text-white text-sm font-bold leading-tight">CELTA Prep Morocco</p>
++              <div className="flex items-center gap-1.5 mt-0.5">
++                <span className="font-body text-[#c9a84c] text-xs font-semibold">From $79 USD</span>
++                <span className="text-[#2a2725]">·</span>
++                <span className="font-body text-[#6b6560] text-xs">94% pass rate</span>
++              </div>
++            </div>
++
++            {/* CTA button */}
++            <Button
++              asChild
++              size="sm"
++              className={`btn-shine bg-gradient-to-r from-[#c9a84c] to-[#b8973b] text-[#0e0c0a] hover:from-[#d4b96a] hover:to-[#c9a84c] font-body font-bold shrink-0 shadow-lg transition-all duration-300 ${
++                pulsed ? '' : 'animate-pulse'
++              }`}
++            >
++              <a
++                href={getWhatsAppLink("Hi Rachid, I want to learn more about CELTA Prep Morocco. Can you help?")}
++                target="_blank"
++                rel="noopener noreferrer"
++              >
++                <MessageCircle className="w-3.5 h-3.5 mr-1.5" />
++                Enroll Now
++                <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
++              </a>
++            </Button>
++          </div>
+         </div>
+-        <Button
+-          asChild
+-          size="sm"
+-          className="bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b] font-body font-semibold min-w-[120px]"
+-        >
+-          <a href={getWhatsAppLink("Hi Rachid, I want to learn more about CELTA Prep Morocco. Can you help?")} target="_blank" rel="noopener noreferrer">
+-            <MessageCircle className="w-4 h-4 mr-2" />
+-            Get Info
+-          </a>
+-        </Button>
+       </div>
+-      
+-      {/* Scroll to top button */}
+-      {isAtBottom && (
+-        <button
+-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+-          className="absolute -top-12 right-4 w-10 h-10 rounded-full bg-[#c9a84c] text-[#0e0c0a] flex items-center justify-center shadow-lg md:hidden"
+-          aria-label="Scroll to top"
+-        >
+-          <ChevronUp className="w-5 h-5" />
+-        </button>
+-      )}
+-    </div>
++    </>
+   )
+ }
+diff --git a/src/components/landing/OfferSection.tsx b/src/components/landing/OfferSection.tsx
+index c22eb4a..86e4539 100755
+--- a/src/components/landing/OfferSection.tsx
++++ b/src/components/landing/OfferSection.tsx
+@@ -1,70 +1,97 @@
+ import { Badge } from '@/components/ui/badge'
+-import { Video, BookOpen, Target, MessageCircle, Users, Sparkles, MapPin, Award } from 'lucide-react'
++import { Button } from '@/components/ui/button'
++import { Video, BookOpen, Target, MessageCircle, Users, Sparkles, MapPin, Award, ArrowRight, CheckCircle2 } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ import { offerItems } from './constants'
++import { getWhatsAppLink } from './constants'
+ 
+-// Icon map for dynamic icon rendering
+ const iconMap: Record<string, React.ElementType> = {
+-  Video: Video,
+-  BookOpen: BookOpen,
+-  Target: Target,
+-  MessageCircle: MessageCircle,
+-  Users: Users,
+-  Sparkles: Sparkles,
+-  MapPin: MapPin,
+-  Award: Award
++  Video, BookOpen, Target, MessageCircle, Users, Sparkles, MapPin, Award
+ }
+ 
+ export function OfferSection() {
+   return (
+-    <section className="py-16 md:py-24">
+-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section className="py-16 md:py-28 bg-[#f5f0e8] relative overflow-hidden">
++      <div className="absolute inset-0 dot-pattern opacity-25" />
++      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#b85c38]/5 rounded-full blur-3xl" />
++
++      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="text-center mb-12">
+-            <Badge className="mb-4 bg-[#c9a84c]/20 text-[#c9a84c] border-[#c9a84c] font-body">
+-              What You Get
+-            </Badge>
+-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-6">
+-              Everything You Need to Pass CELTA
++          <div className="text-center mb-14">
++            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/30 px-4 py-1.5 rounded-full mb-6">
++              <Sparkles className="w-3.5 h-3.5 text-[#c9a84c]" />
++              <span className="font-body text-xs text-[#c9a84c] uppercase tracking-widest font-semibold">What You Get</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-5">
++              Everything You Need to{' '}
++              <span className="text-[#c9a84c]">Pass CELTA</span>
+             </h2>
+-            <p className="font-body text-lg text-[#6b6560]">
++            <p className="font-body text-lg text-[#6b6560] max-w-2xl mx-auto">
+               Here&apos;s exactly what&apos;s included when you join the Full Prep Program.
+             </p>
+           </div>
+         </AnimatedSection>
+ 
+         <AnimatedSection>
+-          <div className="bg-white rounded-2xl shadow-xl border border-[#d4cdc0] overflow-hidden">
+-            <div className="bg-gradient-to-r from-[#c9a84c] to-[#b8973b] p-6 text-center">
+-              <h3 className="font-display text-2xl font-bold text-[#0e0c0a]">Full Prep Program Includes</h3>
++          <div className="bg-white rounded-3xl shadow-xl border border-[#d4cdc0] overflow-hidden">
++            {/* Header bar */}
++            <div className="relative bg-gradient-to-r from-[#0e0c0a] via-[#1a1816] to-[#0e0c0a] px-8 py-6 overflow-hidden">
++              <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)', backgroundSize: '20px 20px' }} />
++              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/60 to-transparent" />
++              <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3">
++                <div>
++                  <h3 className="font-display text-2xl font-bold text-[#f5f0e8]">Full Prep Program Includes</h3>
++                  <p className="font-body text-sm text-[#a09890] mt-1">4 weeks · Live sessions · Lifetime access</p>
++                </div>
++                <div className="flex items-center gap-2 bg-[#c9a84c]/15 border border-[#c9a84c]/30 px-4 py-2 rounded-xl">
++                  <CheckCircle2 className="w-4 h-4 text-[#c9a84c]" />
++                  <span className="font-body text-sm text-[#c9a84c] font-semibold">8 items included</span>
++                </div>
++              </div>
+             </div>
+-            
++
++            {/* Items grid */}
+             <div className="p-6 md:p-8">
+-              <div className="grid md:grid-cols-2 gap-4">
++              <div className="grid md:grid-cols-2 gap-3">
+                 {offerItems.map((item, index) => {
+                   const Icon = iconMap[item.icon]
+                   return (
+-                    <div key={index} className="flex items-start gap-3 p-4 rounded-lg bg-[#f5f0e8]">
+-                      <Icon className="w-6 h-6 text-[#c9a84c] flex-shrink-0 mt-1" />
++                    <div key={index} className="group flex items-start gap-4 p-4 rounded-2xl bg-[#f5f0e8] border border-[#e8e0d0] hover:border-[#c9a84c]/50 hover:bg-[#faf7f2] transition-all duration-200">
++                      <div className="w-10 h-10 rounded-xl bg-white border border-[#d4cdc0] flex items-center justify-center flex-shrink-0 shadow-sm group-hover:border-[#c9a84c]/50 group-hover:shadow-md transition-all duration-200">
++                        <Icon className="w-5 h-5 text-[#c9a84c]" />
++                      </div>
+                       <div>
+-                        <p className="font-body font-semibold text-[#0e0c0a]">{item.title}</p>
+-                        <p className="font-body text-sm text-[#6b6560]">{item.value}</p>
++                        <p className="font-body font-semibold text-[#0e0c0a] text-sm">{item.title}</p>
++                        <p className="font-body text-xs text-[#6b6560] mt-0.5">{item.value}</p>
+                       </div>
+                     </div>
+                   )
+                 })}
+               </div>
+-              
++
++              {/* Price + CTA */}
+               <div className="mt-8 pt-6 border-t border-[#d4cdc0]">
+-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
++                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                   <div>
+-                    <p className="font-body text-[#6b6560]">Full Prep Program</p>
+-                    <p className="font-body text-sm text-[#a09890]">4 weeks of live instruction + materials + support</p>
+-                  </div>
+-                  <div className="text-center md:text-right">
+-                    <p className="font-body text-[#0e0c0a] font-semibold">Your investment</p>
+-                    <p className="font-display text-4xl font-bold text-[#c9a84c]">$150 USD</p>
++                    <p className="font-body text-sm text-[#6b6560]">Full Prep Program</p>
++                    <p className="font-body text-xs text-[#a09890] mt-0.5">4 weeks of live instruction + all materials + support</p>
++                    <div className="flex items-baseline gap-1 mt-2">
++                      <span className="font-body text-xl text-[#6b6560]">$</span>
++                      <span className="font-display text-5xl font-bold text-[#0e0c0a] stat-number">149</span>
++                      <span className="font-body text-[#6b6560]">USD</span>
++                    </div>
++                    <p className="font-body text-xs text-[#c9a84c] font-semibold mt-1">💳 Payment plans available</p>
+                   </div>
++                  <Button
++                    asChild
++                    size="lg"
++                    className="btn-shine font-body font-bold text-base px-10 py-6 bg-gradient-to-r from-[#c9a84c] to-[#b8973b] text-[#0e0c0a] hover:from-[#d4b96a] hover:to-[#c9a84c] shadow-lg shadow-[#c9a84c]/25 transition-all duration-300"
++                  >
++                    <a href={getWhatsAppLink("Hi Rachid, I'm interested in the Full Prep Program ($149 USD). What's included?")} target="_blank" rel="noopener noreferrer">
++                      Get Started Today
++                      <ArrowRight className="w-5 h-5 ml-2" />
++                    </a>
++                  </Button>
+                 </div>
+               </div>
+             </div>
+diff --git a/src/components/landing/PersonaSection.tsx b/src/components/landing/PersonaSection.tsx
+index 740170a..c55b03e 100755
+--- a/src/components/landing/PersonaSection.tsx
++++ b/src/components/landing/PersonaSection.tsx
+@@ -1,79 +1,108 @@
+ import { Badge } from '@/components/ui/badge'
+-import { GraduationCap, BookOpen, Target } from 'lucide-react'
++import { GraduationCap, BookOpen, Target, ArrowRight } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ 
+-// Persona Card Component
+-function PersonaCard({
+-  icon: Icon,
+-  title,
+-  description,
+-  cta
+-}: {
+-  icon: React.ElementType
+-  title: string
+-  description: string
+-  cta: string
+-}) {
+-  return (
+-    <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-[#d4cdc0] hover:shadow-xl transition-all duration-300">
+-      <div className="w-14 h-14 rounded-full bg-[#e8e0d0] flex items-center justify-center mb-4">
+-        <Icon className="w-7 h-7 text-[#b85c38]" />
+-      </div>
+-      <h3 className="font-display text-xl md:text-2xl font-semibold text-[#0e0c0a] mb-3">{title}</h3>
+-      <p className="font-body text-[#6b6560] mb-4">{description}</p>
+-      <p className="font-body text-[#b85c38] font-medium italic">{cta}</p>
+-    </div>
+-  )
+-}
+-
+-// Personas data
+ const personas = [
+   {
+     icon: GraduationCap,
++    number: '01',
+     title: "The Ambitious Graduate",
+-    description: "You're finishing your English degree at a Moroccan university. You want to teach internationally — Vietnam, Korea, the Gulf, Europe — but you've never taught formally. CELTA feels like something 'other people' do, and you're not sure if you qualify.",
+-    cta: "If that's you, this program was built for you."
++    description: "You're finishing your English degree at a Moroccan university. You want to teach internationally — Vietnam, Korea, the Gulf, Europe — but you've never taught formally. CELTA feels like something 'other people' do. You check Instagram at night wondering if you'll ever get out.",
++    cta: "This program was built for you.",
++    accentColor: '#c9a84c',
++    bg: 'bg-[#f5f0e8]',
++    border: 'border-[#d4cdc0]'
+   },
+   {
+     icon: BookOpen,
++    number: '02',
+     title: "The Novice Teacher",
+     description: "You're already teaching at a private school or language center in Morocco. You don't have formal certification. Every day brings a whisper of impostor syndrome. You've known CELTA would change your career for 2 years now — but you don't know where to start.",
+-    cta: "If that's you, this program was built for you."
++    cta: "This program was built for you.",
++    accentColor: '#b85c38',
++    bg: 'bg-[#0e0c0a]',
++    border: 'border-[#2a2725]',
++    dark: true
+   },
+   {
+     icon: Target,
++    number: '03',
+     title: "The Second-Chance Candidate",
+     description: "You tried CELTA before. Maybe you withdrew. Maybe you didn't pass. You know you can do this — you just need someone to show you exactly what went wrong and how to fix it before you try again. You're not giving up on your dream.",
+-    cta: "If that's you, this program was built for you."
++    cta: "This program was built for you.",
++    accentColor: '#c9a84c',
++    bg: 'bg-[#f5f0e8]',
++    border: 'border-[#d4cdc0]'
+   }
+ ]
+ 
+ export function PersonaSection() {
+   return (
+-    <section className="py-16 md:py-24 bg-[#e8e0d0]">
+-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section className="py-16 md:py-28 bg-[#e8e0d0] relative overflow-hidden">
++      <div className="absolute inset-0 dot-pattern opacity-25" />
++      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-[#c9a84c]/6 rounded-full blur-3xl" />
++
++      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="text-center mb-12">
+-            <Badge className="mb-4 bg-[#b85c38] text-white font-body">
+-              Who This Is For
+-            </Badge>
+-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-6">
+-              This Program Was Built For You If...
++          <div className="text-center mb-16">
++            <div className="inline-flex items-center gap-2 bg-[#b85c38]/10 border border-[#b85c38]/25 px-4 py-1.5 rounded-full mb-6">
++              <span className="font-body text-xs text-[#b85c38] uppercase tracking-widest font-semibold">Who This Is For</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-5">
++              Recognise{' '}
++              <span className="text-[#b85c38]">Yourself?</span>
+             </h2>
++            <p className="font-body text-lg text-[#6b6560] max-w-xl mx-auto">
++              This program was designed around three specific teachers. One of them is you.
++            </p>
+           </div>
+         </AnimatedSection>
+ 
+         <div className="grid md:grid-cols-3 gap-6">
+-          {personas.map((persona, index) => (
+-            <AnimatedSection key={index}>
+-              <PersonaCard
+-                icon={persona.icon}
+-                title={persona.title}
+-                description={persona.description}
+-                cta={persona.cta}
+-              />
+-            </AnimatedSection>
+-          ))}
++          {personas.map((persona, index) => {
++            const Icon = persona.icon
++            return (
++              <AnimatedSection key={index} className={`stagger-${index + 1}`}>
++                <div className={`premium-card group relative h-full rounded-3xl border-2 ${persona.bg} ${persona.border} overflow-hidden`}>
++                  {/* Top gradient bar */}
++                  <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${persona.accentColor}60, ${persona.accentColor}, ${persona.accentColor}60)` }} />
++
++                  {/* Subtle bg dot for dark cards */}
++                  {persona.dark && (
++                    <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)', backgroundSize: '20px 20px' }} />
++                  )}
++
++                  <div className="p-7 relative z-10">
++                    {/* Number + icon row */}
++                    <div className="flex items-start justify-between mb-6">
++                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-md" style={{ background: `${persona.accentColor}15`, border: `1px solid ${persona.accentColor}30` }}>
++                        <Icon className="w-7 h-7" style={{ color: persona.accentColor }} />
++                      </div>
++                      <span className="font-display text-5xl font-bold opacity-10" style={{ color: persona.accentColor }}>
++                        {persona.number}
++                      </span>
++                    </div>
++
++                    <h3 className={`font-display text-xl font-bold mb-4 leading-tight ${persona.dark ? 'text-[#f5f0e8]' : 'text-[#0e0c0a]'}`}>
++                      {persona.title}
++                    </h3>
++
++                    <p className={`font-body text-sm leading-relaxed mb-6 ${persona.dark ? 'text-[#a09890]' : 'text-[#6b6560]'}`}>
++                      {persona.description}
++                    </p>
++
++                    {/* CTA line */}
++                    <div className="flex items-center gap-2 pt-4 border-t" style={{ borderColor: persona.dark ? '#2a2725' : '#d4cdc0' }}>
++                      <ArrowRight className="w-4 h-4 flex-shrink-0" style={{ color: persona.accentColor }} />
++                      <p className="font-body text-sm font-semibold italic" style={{ color: persona.accentColor }}>
++                        {persona.cta}
++                      </p>
++                    </div>
++                  </div>
++                </div>
++              </AnimatedSection>
++            )
++          })}
+         </div>
+       </div>
+     </section>
+diff --git a/src/components/landing/PricingSection.tsx b/src/components/landing/PricingSection.tsx
+index 2399fa0..1083b09 100755
+--- a/src/components/landing/PricingSection.tsx
++++ b/src/components/landing/PricingSection.tsx
+@@ -3,7 +3,7 @@
+ import { Card, CardContent } from '@/components/ui/card'
+ import { Badge } from '@/components/ui/badge'
+ import { Button } from '@/components/ui/button'
+-import { CheckCircle2, ArrowRight, HelpCircle } from 'lucide-react'
++import { CheckCircle2, ArrowRight, Zap, Shield, Users, Crown } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ import { getWhatsAppLink } from './constants'
+ import { useRouter } from 'next/navigation'
+@@ -13,13 +13,15 @@ const pricingTiers = [
+     name: "Self-Study",
+     price: "79",
+     description: "For independent learners on a budget.",
++    icon: Users,
++    accentColor: "#6b6560",
+     features: [
+       'Full recorded curriculum access',
+       'All templates and materials',
+       'Community WhatsApp group',
+       'Self-paced learning'
+     ],
+-    ctaMessage: "Hi Rachid, I'm interested in the Self-Study program ($80 USD). Can you tell me more?",
++    ctaMessage: "Hi Rachid, I'm interested in the Self-Study program ($79 USD). Can you tell me more?",
+     ctaText: "Join the Course",
+     isOnlinePurchase: true
+   },
+@@ -27,27 +29,34 @@ const pricingTiers = [
+     name: "Full Prep Program",
+     price: "149",
+     description: "The complete preparation experience.",
++    icon: Zap,
++    accentColor: "#c9a84c",
+     isPopular: true,
+     features: [
+       'All live Zoom sessions',
+       '2× personal teaching feedback',
+       'Priority WhatsApp support',
+       'Full mock teaching day',
+-      'All 4 assignments reviewed'
++      'All 4 assignments reviewed',
++      'Limited to 12 students'
+     ],
+-    ctaMessage: "Hi Rachid, I'm interested in the Full Prep Program ($150 USD). What's included?",
++    ctaMessage: "Hi Rachid, I'm interested in the Full Prep Program ($149 USD). What's included?",
+     ctaText: "Get Started"
+   },
+   {
+     name: "VIP Intensive",
+     price: "249",
+     description: "Maximum support for maximum results.",
++    icon: Crown,
++    accentColor: "#b85c38",
+     features: [
+       'Everything in Full Program',
+       '5× private 1-on-1 sessions',
+       'All assignments polished with you',
+       'Same-day WhatsApp response',
+-      'Post-CELTA career strategy call'
++      'Post-CELTA career strategy call',
++      'DELTA pathway roadmap',
++      'Max 3 students per cohort'
+     ],
+     ctaMessage: "Hi Rachid, I'm interested in the VIP Intensive ($249 USD). I'd like to discuss if it's right for me.",
+     ctaText: "Apply Now"
+@@ -55,113 +64,138 @@ const pricingTiers = [
+ ]
+ 
+ function PricingCard({
+-  name,
+-  price,
+-  description,
+-  features,
+-  isPopular = false,
+-  ctaMessage,
+-  ctaText,
+-  isOnlinePurchase = false
++  name, price, description, features, isPopular = false,
++  ctaMessage, ctaText, isOnlinePurchase = false, icon: Icon, accentColor
+ }: {
+-  name: string
+-  price: string
+-  description: string
+-  features: string[]
+-  isPopular?: boolean
+-  ctaMessage: string
+-  ctaText: string
+-  isOnlinePurchase?: boolean
++  name: string; price: string; description: string; features: string[]
++  isPopular?: boolean; ctaMessage: string; ctaText: string
++  isOnlinePurchase?: boolean; icon: any; accentColor: string
+ }) {
+   const router = useRouter()
+-  
+-  const handleButtonClick = () => {
+-    if (isOnlinePurchase) {
+-      router.push('/course')
+-    }
+-  }
+ 
+   return (
+-    <Card className={`relative bg-white border-2 shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col ${
+-      isPopular ? 'border-[#c9a84c] scale-105 z-10' : 'border-[#d4cdc0]'
+-    }`}>
++    <div className={`relative h-full flex flex-col ${isPopular ? 'pricing-popular rounded-2xl' : ''}`}>
+       {isPopular && (
+-        <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+-          <Badge className="bg-[#c9a84c] text-[#0e0c0a] px-4 py-1 font-semibold">
+-            Most Popular
+-          </Badge>
++        <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
++          <div className="bg-gradient-to-r from-[#c9a84c] to-[#b8973b] text-[#0e0c0a] text-xs font-body font-bold px-5 py-1.5 rounded-full shadow-lg whitespace-nowrap tracking-wide uppercase">
++            ✦ Most Popular ✦
++          </div>
+         </div>
+       )}
+-      <CardContent className="p-6 md:p-8 flex flex-col h-full">
+-        <div className="mb-4">
+-          <h3 className="font-display text-2xl font-bold text-[#0e0c0a] mb-1">{name}</h3>
+-          <p className="font-body text-[#6b6560] text-sm">{description}</p>
+-        </div>
+-        <div className="mb-6">
+-          <span className="font-display text-4xl md:text-5xl font-bold text-[#0e0c0a]">${price}</span>
+-          <span className="font-body text-[#6b6560]"> USD</span>
+-        </div>
+-        <ul className="space-y-3 mb-8 flex-grow">
+-          {features.map((feature, index) => (
+-            <li key={index} className="flex items-start gap-2">
+-              <CheckCircle2 className="w-5 h-5 text-[#c9a84c] mt-0.5 flex-shrink-0" />
+-              <span className="font-body text-[#0e0c0a]">{feature}</span>
+-            </li>
+-          ))}
+-        </ul>
+-        {isOnlinePurchase ? (
+-          <Button
+-            onClick={handleButtonClick}
+-            className={`w-full font-body font-semibold text-lg py-6 ${
+-              isPopular 
+-                ? 'bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b]' 
+-                : 'bg-[#0e0c0a] text-[#f5f0e8] hover:bg-[#2a2725]'
+-            }`}
+-          >
+-            {ctaText}
+-            <ArrowRight className="w-5 h-5 ml-2" />
+-          </Button>
+-        ) : (
+-          <Button
+-            asChild
+-            className={`w-full font-body font-semibold text-lg py-6 ${
+-              isPopular 
+-                ? 'bg-[#c9a84c] text-[#0e0c0a] hover:bg-[#b8973b]' 
+-                : 'bg-[#0e0c0a] text-[#f5f0e8] hover:bg-[#2a2725]'
+-            }`}
+-          >
+-            <a href={getWhatsAppLink(ctaMessage)} target="_blank" rel="noopener noreferrer">
+-              {ctaText}
+-              <ArrowRight className="w-5 h-5 ml-2" />
+-            </a>
+-          </Button>
++
++      <Card className={`relative h-full flex flex-col overflow-hidden border-2 transition-all duration-300 ${
++        isPopular ? 'border-[#c9a84c] bg-white' : 'border-[#d4cdc0] bg-white hover:border-[#c9a84c]/50'
++      }`}>
++        {/* Top gradient stripe */}
++        <div className="h-1.5 w-full" style={{
++          background: isPopular
++            ? 'linear-gradient(90deg, #c9a84c, #e8c96a, #c9a84c)'
++            : `linear-gradient(90deg, ${accentColor}80, ${accentColor}40)`
++        }} />
++
++        {/* Background glow for popular */}
++        {isPopular && (
++          <div className="absolute top-0 right-0 w-48 h-48 bg-[#c9a84c]/5 rounded-full blur-2xl pointer-events-none" />
+         )}
+-      </CardContent>
+-    </Card>
++
++        <CardContent className="p-7 flex flex-col h-full relative z-10">
++          {/* Header */}
++          <div className="flex items-start justify-between mb-5">
++            <div>
++              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ background: `${accentColor}15` }}>
++                <Icon className="w-5 h-5" style={{ color: accentColor }} />
++              </div>
++              <h3 className="font-display text-2xl font-bold text-[#0e0c0a]">{name}</h3>
++              <p className="font-body text-[#6b6560] text-sm mt-1">{description}</p>
++            </div>
++          </div>
++
++          {/* Price */}
++          <div className="mb-6 pb-6 border-b border-[#e8e0d0]">
++            <div className="flex items-end gap-1">
++              <span className="font-body text-lg text-[#6b6560] mb-1">$</span>
++              <span className="font-display text-5xl font-bold text-[#0e0c0a] stat-number leading-none">{price}</span>
++              <span className="font-body text-[#6b6560] mb-1 ml-1">USD</span>
++            </div>
++            {isPopular && (
++              <p className="font-body text-xs text-[#c9a84c] font-semibold mt-2">
++                💳 Payment plans available · Split into 2
++              </p>
++            )}
++          </div>
++
++          {/* Features */}
++          <ul className="space-y-3 mb-8 flex-grow">
++            {features.map((feature, index) => (
++              <li key={index} className="flex items-start gap-2.5">
++                <CheckCircle2 className="w-4.5 h-4.5 mt-0.5 flex-shrink-0" style={{ color: accentColor }} />
++                <span className="font-body text-sm text-[#0e0c0a] leading-snug">{feature}</span>
++              </li>
++            ))}
++          </ul>
++
++          {/* CTA */}
++          {isOnlinePurchase ? (
++            <Button
++              onClick={() => router.push('/course')}
++              className="btn-shine w-full font-body font-semibold text-base py-6 transition-all duration-300"
++              style={{
++                background: isPopular ? 'linear-gradient(135deg, #c9a84c, #b8973b)' : '#0e0c0a',
++                color: isPopular ? '#0e0c0a' : '#f5f0e8'
++              }}
++            >
++              {ctaText}
++              <ArrowRight className="w-4 h-4 ml-2" />
++            </Button>
++          ) : (
++            <Button
++              asChild
++              className="btn-shine w-full font-body font-semibold text-base py-6 transition-all duration-300"
++              style={{
++                background: isPopular ? 'linear-gradient(135deg, #c9a84c, #b8973b)' : '#0e0c0a',
++                color: isPopular ? '#0e0c0a' : '#f5f0e8'
++              }}
++            >
++              <a href={getWhatsAppLink(ctaMessage)} target="_blank" rel="noopener noreferrer">
++                {ctaText}
++                <ArrowRight className="w-4 h-4 ml-2" />
++              </a>
++            </Button>
++          )}
++        </CardContent>
++      </Card>
++    </div>
+   )
+ }
+ 
+ export function PricingSection() {
+   return (
+-    <section id="pricing" className="py-16 md:py-24 bg-[#e8e0d0]">
+-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section id="pricing" className="py-16 md:py-28 bg-[#f5f0e8] relative overflow-hidden">
++      {/* Background elements */}
++      <div className="absolute inset-0 dot-pattern opacity-30" />
++      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#c9a84c]/5 rounded-full blur-3xl" />
++
++      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="text-center mb-12">
+-            <Badge className="mb-4 bg-[#b85c38] text-white font-body">
+-              Transparent Pricing
+-            </Badge>
+-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-6">
+-              Choose Your Preparation Level
++          <div className="text-center mb-16">
++            <div className="inline-flex items-center gap-2 bg-[#b85c38]/10 border border-[#b85c38]/25 px-4 py-1.5 rounded-full mb-6">
++              <Shield className="w-3.5 h-3.5 text-[#b85c38]" />
++              <span className="font-body text-xs text-[#b85c38] uppercase tracking-widest font-semibold">Transparent Pricing</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-5">
++              Choose Your{' '}
++              <span className="text-[#c9a84c]">Preparation Level</span>
+             </h2>
+             <p className="font-body text-lg text-[#6b6560] max-w-2xl mx-auto">
+-              Three options. One goal: walk into CELTA ready to pass. No hidden fees. Payment plans available.
++              Three options. One goal: walk into CELTA ready to pass.
++              No hidden fees. Payment plans available.
+             </p>
+           </div>
+         </AnimatedSection>
+ 
+-        <div className="grid lg:grid-cols-3 gap-6 items-stretch">
++        <div className="grid lg:grid-cols-3 gap-6 items-start pt-6">
+           {pricingTiers.map((tier, index) => (
+-            <AnimatedSection key={index}>
++            <AnimatedSection key={index} className={`stagger-${index + 1}`}>
+               <PricingCard
+                 name={tier.name}
+                 price={tier.price}
+@@ -171,6 +205,8 @@ export function PricingSection() {
+                 ctaMessage={tier.ctaMessage}
+                 ctaText={tier.ctaText}
+                 isOnlinePurchase={tier.isOnlinePurchase}
++                icon={tier.icon}
++                accentColor={tier.accentColor}
+               />
+             </AnimatedSection>
+           ))}
+@@ -178,17 +214,19 @@ export function PricingSection() {
+ 
+         <AnimatedSection>
+           <div className="mt-12 text-center">
+-            <div className="inline-flex items-center gap-2 bg-white rounded-lg px-6 py-4 shadow border border-[#d4cdc0]">
+-              <HelpCircle className="w-5 h-5 text-[#c9a84c]" />
+-              <span className="font-body text-[#6b6560]">
+-                Not sure which option is right for you? 
+-                <a 
++            <div className="inline-flex items-center gap-3 glass rounded-xl px-6 py-4 shadow-sm border border-white/60">
++              <div className="w-8 h-8 rounded-full bg-[#c9a84c]/15 flex items-center justify-center">
++                <span className="text-base">💬</span>
++              </div>
++              <span className="font-body text-[#6b6560] text-sm">
++                Not sure which option is right for you?{' '}
++                <a
+                   href={getWhatsAppLink("Hi Rachid, I'm not sure which CELTA prep option is right for me. Can you help?")}
+                   target="_blank"
+                   rel="noopener noreferrer"
+-                  className="text-[#b85c38] hover:underline ml-1"
++                  className="text-[#b85c38] font-semibold hover:underline ml-0.5"
+                 >
+-                  Let&apos;s talk
++                  Let&apos;s talk on WhatsApp →
+                 </a>
+               </span>
+             </div>
+diff --git a/src/components/landing/ProblemSection.tsx b/src/components/landing/ProblemSection.tsx
+index 0e4a072..3457299 100755
+--- a/src/components/landing/ProblemSection.tsx
++++ b/src/components/landing/ProblemSection.tsx
+@@ -1,5 +1,5 @@
+ import { AnimatedSection } from './AnimatedSection'
+-import { AlertTriangle } from 'lucide-react'
++import { AlertTriangle, ArrowRight } from 'lucide-react'
+ 
+ const problems = [
+   {
+@@ -22,12 +22,26 @@ const problems = [
+ 
+ export function ProblemSection() {
+   return (
+-    <section className="py-16 md:py-24 bg-[#0e0c0a]">
+-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section className="py-16 md:py-24 bg-[#0e0c0a] relative overflow-hidden">
++      {/* Background texture */}
++      <div className="absolute inset-0 opacity-[0.04]" style={{
++        backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)',
++        backgroundSize: '32px 32px'
++      }} />
++      {/* Ambient glows */}
++      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#b85c38]/10 rounded-full blur-3xl" />
++      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#c9a84c]/6 rounded-full blur-3xl" />
++      
++      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+           <div className="text-center mb-12">
+-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#f5f0e8] mb-6">
+-              The Truth About CELTA in Morocco
++            <div className="inline-flex items-center gap-2 bg-[#b85c38]/20 border border-[#b85c38]/30 px-4 py-1.5 rounded-full mb-6">
++              <AlertTriangle className="w-3.5 h-3.5 text-[#b85c38]" />
++              <span className="font-body text-xs text-[#b85c38] uppercase tracking-widest font-medium">Sound familiar?</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#f5f0e8] mb-6 leading-tight">
++              The Truth About{' '}
++              <span className="text-[#c9a84c]">CELTA in Morocco</span>
+             </h2>
+             <p className="font-body text-lg md:text-xl text-[#a09890] max-w-3xl mx-auto">
+               Every year, talented Moroccan teachers like you face the same fears. 
+@@ -36,18 +50,22 @@ export function ProblemSection() {
+           </div>
+         </AnimatedSection>
+         
+-        <div className="space-y-6">
++        <div className="space-y-4">
+           {problems.map((problem, index) => (
+             <AnimatedSection key={index}>
+-              <div className="bg-[#1a1816] rounded-xl p-6 border border-[#2a2725] hover:border-[#b85c38] transition-colors">
++              <div className="problem-card bg-[#1a1816] rounded-2xl p-6 border border-[#2a2725] group cursor-default relative overflow-hidden">
++                {/* Left accent line */}
++                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#b85c38]/0 via-[#b85c38] to-[#b85c38]/0 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
++                
+                 <div className="flex items-start gap-4">
+-                  <div className="w-10 h-10 rounded-full bg-[#b85c38]/20 flex items-center justify-center flex-shrink-0">
++                  <div className="w-10 h-10 rounded-xl bg-[#b85c38]/15 flex items-center justify-center flex-shrink-0 group-hover:bg-[#b85c38]/25 transition-colors duration-300">
+                     <AlertTriangle className="w-5 h-5 text-[#b85c38]" />
+                   </div>
+-                  <div>
+-                    <p className="font-body text-lg md:text-xl text-[#f5f0e8] italic mb-2">{problem.fear}</p>
+-                    <p className="font-body text-[#a09890]">{problem.reality}</p>
++                  <div className="flex-1">
++                    <p className="font-display text-lg md:text-xl text-[#f5f0e8] italic mb-2 font-semibold">{problem.fear}</p>
++                    <p className="font-body text-[#a09890] leading-relaxed">{problem.reality}</p>
+                   </div>
++                  <ArrowRight className="w-5 h-5 text-[#2a2725] group-hover:text-[#b85c38] group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 mt-1" />
+                 </div>
+               </div>
+             </AnimatedSection>
+@@ -55,13 +73,19 @@ export function ProblemSection() {
+         </div>
+         
+         <AnimatedSection>
+-          <div className="mt-12 text-center">
+-            <p className="font-body text-xl md:text-2xl text-[#f5f0e8] font-semibold mb-4">
+-              But here&apos;s what happens when you stop preparing alone...
+-            </p>
+-            <p className="font-body text-lg text-[#c9a84c]">
+-              44 out of 47 students passed CELTA on their first attempt after completing this program.
+-            </p>
++          <div className="mt-14 text-center">
++            <div className="inline-block bg-gradient-to-r from-[#c9a84c]/10 via-[#c9a84c]/20 to-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-2xl px-8 py-6">
++              <p className="font-display text-xl md:text-2xl text-[#f5f0e8] font-semibold mb-2">
++                But here&apos;s what happens when you stop preparing alone...
++              </p>
++              <div className="flex items-center justify-center gap-3 mt-4">
++                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#c9a84c]/40 max-w-[80px]" />
++                <p className="font-body text-lg text-[#c9a84c] font-semibold">
++                  44 out of 47 students passed CELTA on their first attempt.
++                </p>
++                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#c9a84c]/40 max-w-[80px]" />
++              </div>
++            </div>
+           </div>
+         </AnimatedSection>
+       </div>
+diff --git a/src/components/landing/SolutionSection.tsx b/src/components/landing/SolutionSection.tsx
+index b3e7558..eaf4423 100755
+--- a/src/components/landing/SolutionSection.tsx
++++ b/src/components/landing/SolutionSection.tsx
+@@ -1,135 +1,146 @@
++'use client'
++
+ import { Badge } from '@/components/ui/badge'
+ import { Button } from '@/components/ui/button'
+ import { CheckCircle2, XCircle, ArrowRight, Clock, Video, MessageCircle, FileText } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ 
++const pillars = [
++  { icon: Clock, title: '4 Weeks', desc: 'Structured preparation' },
++  { icon: Video, title: 'Live Sessions', desc: 'Not just recordings' },
++  { icon: MessageCircle, title: 'WhatsApp Support', desc: 'Questions answered daily' },
++  { icon: FileText, title: 'Assignment Help', desc: 'All 4 reviewed' }
++]
++
++const masterList = [
++  'Every CELTA assessment criterion — and exactly how to meet it',
++  'Lesson planning that impresses assessors (with templates)',
++  'CCQs, ICQs, and staging that show you know what you\'re doing',
++  'All 4 written assignments — reviewed before submission',
++  'Real teaching practice with honest, constructive feedback'
++]
++
++const notList = [
++  'NOT a generic TEFL course — this is 100% CELTA-specific',
++  'NOT pre-recorded videos you watch alone — live interaction matters',
++  'NOT a pass guarantee without work — you must participate',
++  'NOT for CELTA holders — this is preparation, not advanced training',
++  'NOT a CELTA replacement — you still take the real course'
++]
++
+ export function SolutionSection() {
+   return (
+-    <section className="py-16 md:py-24">
+-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section className="py-16 md:py-28 bg-white relative overflow-hidden">
++      {/* Subtle mesh bg */}
++      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c9a84c]/4 rounded-full blur-3xl pointer-events-none" />
++      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#b85c38]/4 rounded-full blur-3xl pointer-events-none" />
++
++      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="text-center mb-12">
+-            <Badge className="mb-4 bg-[#c9a84c]/20 text-[#c9a84c] border-[#c9a84c] font-body">
+-              The Solution
+-            </Badge>
+-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-6">
++          <div className="text-center mb-16">
++            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/30 px-4 py-1.5 rounded-full mb-6">
++              <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
++              <span className="font-body text-xs text-[#c9a84c] uppercase tracking-widest font-semibold">The Solution</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-5 leading-tight">
+               CELTA Prep Morocco
+             </h2>
+-            <p className="font-body text-lg md:text-xl text-[#6b6560] max-w-3xl mx-auto mb-8">
+-              The only CELTA preparation program designed specifically for Moroccan teachers — 
++            <p className="font-body text-lg md:text-xl text-[#6b6560] max-w-3xl mx-auto">
++              The only CELTA preparation program designed specifically for Moroccan teachers —
+               by a Moroccan teacher who passed CELTA and knows exactly what you&apos;re going through.
+             </p>
+           </div>
+         </AnimatedSection>
+ 
+-        {/* What You Get */}
++        {/* 4 Pillars */}
+         <AnimatedSection>
+-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+-            {[
+-              { icon: Clock, title: '4 Weeks', desc: 'Structured preparation' },
+-              { icon: Video, title: 'Live Sessions', desc: 'Not just recordings' },
+-              { icon: MessageCircle, title: 'WhatsApp Support', desc: 'Questions answered daily' },
+-              { icon: FileText, title: 'Assignment Help', desc: 'All 4 reviewed' }
+-            ].map((item, index) => (
+-              <div key={index} className="bg-white rounded-xl p-4 border border-[#d4cdc0] text-center">
+-                <div className="w-12 h-12 mx-auto mb-3 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
++          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
++            {pillars.map((item, index) => (
++              <div key={index} className="premium-card group bg-[#f5f0e8] rounded-2xl p-5 border border-[#d4cdc0] text-center hover:border-[#c9a84c]/60 relative overflow-hidden">
++                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
++                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-white shadow-sm border border-[#d4cdc0] flex items-center justify-center group-hover:border-[#c9a84c]/50 transition-colors duration-300">
+                   <item.icon className="w-6 h-6 text-[#c9a84c]" />
+                 </div>
+-                <h4 className="font-display font-semibold text-[#0e0c0a]">{item.title}</h4>
++                <h4 className="font-display text-lg font-bold text-[#0e0c0a] mb-1">{item.title}</h4>
+                 <p className="font-body text-sm text-[#6b6560]">{item.desc}</p>
+               </div>
+             ))}
+           </div>
+         </AnimatedSection>
+ 
+-        <div className="grid md:grid-cols-2 gap-8 mb-12">
++        {/* What you master / What this is not */}
++        <div className="grid md:grid-cols-2 gap-6 mb-14">
+           <AnimatedSection>
+-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-[#d4cdc0]">
+-              <div className="flex items-center gap-3 mb-4">
+-                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+-                  <CheckCircle2 className="w-5 h-5 text-green-600" />
++            <div className="bg-[#f5f0e8] rounded-2xl p-8 border border-[#d4cdc0] h-full relative overflow-hidden">
++              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#c9a84c] to-[#c9a84c]/20 rounded-l-2xl" />
++              <div className="flex items-center gap-3 mb-6">
++                <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/15 flex items-center justify-center">
++                  <CheckCircle2 className="w-5 h-5 text-[#c9a84c]" />
+                 </div>
+-                <h3 className="font-display text-xl font-semibold text-[#0e0c0a]">What You&apos;ll Master</h3>
++                <h3 className="font-display text-xl font-bold text-[#0e0c0a]">What You&apos;ll Master</h3>
+               </div>
+-              <ul className="font-body text-[#6b6560] space-y-3">
+-                <li className="flex items-start gap-2">
+-                  <CheckCircle2 className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+-                  <span>Every CELTA assessment criterion — and exactly how to meet it</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <CheckCircle2 className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+-                  <span>Lesson planning that impresses assessors (with templates)</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <CheckCircle2 className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+-                  <span>CCQs, ICQs, and staging that show you know what you&apos;re doing</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <CheckCircle2 className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+-                  <span>All 4 written assignments — reviewed before submission</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <CheckCircle2 className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+-                  <span>Real teaching practice with honest, constructive feedback</span>
+-                </li>
++              <ul className="space-y-3.5">
++                {masterList.map((item, i) => (
++                  <li key={i} className="flex items-start gap-3">
++                    <CheckCircle2 className="w-4 h-4 text-[#c9a84c] mt-0.5 flex-shrink-0" />
++                    <span className="font-body text-sm text-[#4a4540] leading-snug">{item}</span>
++                  </li>
++                ))}
+               </ul>
+             </div>
+           </AnimatedSection>
+ 
+           <AnimatedSection>
+-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-[#d4cdc0]">
+-              <div className="flex items-center gap-3 mb-4">
+-                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+-                  <XCircle className="w-5 h-5 text-red-500" />
++            <div className="bg-[#0e0c0a] rounded-2xl p-8 border border-[#2a2725] h-full relative overflow-hidden">
++              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#b85c38] to-[#b85c38]/20 rounded-l-2xl" />
++              {/* Subtle dot pattern */}
++              <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)', backgroundSize: '20px 20px' }} />
++              <div className="flex items-center gap-3 mb-6 relative z-10">
++                <div className="w-10 h-10 rounded-xl bg-[#b85c38]/15 flex items-center justify-center">
++                  <XCircle className="w-5 h-5 text-[#b85c38]" />
+                 </div>
+-                <h3 className="font-display text-xl font-semibold text-[#0e0c0a]">What This Is NOT</h3>
++                <h3 className="font-display text-xl font-bold text-[#f5f0e8]">What This Is NOT</h3>
+               </div>
+-              <ul className="font-body text-[#6b6560] space-y-3">
+-                <li className="flex items-start gap-2">
+-                  <XCircle className="w-4 h-4 text-red-400 mt-1 flex-shrink-0" />
+-                  <span>NOT a generic TEFL course — this is 100% CELTA-specific</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <XCircle className="w-4 h-4 text-red-400 mt-1 flex-shrink-0" />
+-                  <span>NOT pre-recorded videos you watch alone — live interaction matters</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <XCircle className="w-4 h-4 text-red-400 mt-1 flex-shrink-0" />
+-                  <span>NOT a pass guarantee without work — you must participate</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <XCircle className="w-4 h-4 text-red-400 mt-1 flex-shrink-0" />
+-                  <span>NOT for CELTA holders — this is preparation, not advanced training</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <XCircle className="w-4 h-4 text-red-400 mt-1 flex-shrink-0" />
+-                  <span>NOT a CELTA replacement — you still take the real course</span>
+-                </li>
++              <ul className="space-y-3.5 relative z-10">
++                {notList.map((item, i) => (
++                  <li key={i} className="flex items-start gap-3">
++                    <XCircle className="w-4 h-4 text-[#b85c38] mt-0.5 flex-shrink-0" />
++                    <span className="font-body text-sm text-[#a09890] leading-snug">{item}</span>
++                  </li>
++                ))}
+               </ul>
+             </div>
+           </AnimatedSection>
+         </div>
+ 
++        {/* Promise Banner */}
+         <AnimatedSection>
+-          <div className="bg-gradient-to-r from-[#c9a84c] to-[#b85c38] rounded-2xl p-8 md:p-12 text-center">
+-            <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-4">
+-              Our Promise to You
+-            </h3>
+-            <p className="font-body text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-6">
+-              After 4 weeks, you will walk into your CELTA course knowing exactly what assessors expect, 
+-              confident in your teaching practice, and prepared to pass on your first attempt — 
+-              <span className="font-semibold"> or we continue working with you for free until you do.</span>
+-            </p>
+-            <Button
+-              asChild
+-              size="lg"
+-              className="font-body font-semibold bg-white text-[#0e0c0a] hover:bg-[#f5f0e8]"
+-            >
+-              <a href="#pricing">
+-                See Pricing Options
+-                <ArrowRight className="w-5 h-5 ml-2" />
+-              </a>
+-            </Button>
++          <div className="relative rounded-3xl overflow-hidden">
++            {/* Rich gradient background */}
++            <div className="absolute inset-0 bg-gradient-to-br from-[#c9a84c] via-[#c09040] to-[#b85c38]" />
++            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
++            {/* Corner decoration */}
++            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
++            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
++
++            <div className="relative z-10 p-8 md:p-12 text-center">
++              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full mb-6">
++                <span className="font-body text-xs text-white uppercase tracking-widest font-bold">Our Promise to You</span>
++              </div>
++              <p className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 max-w-3xl mx-auto leading-snug">
++                After 4 weeks, you will walk into your CELTA course knowing exactly what assessors expect —
++                confident, prepared, and ready to pass on your first attempt.
++                <span className="block mt-2 font-body text-base font-normal text-white/80">
++                  Or we continue working with you for free until you do.
++                </span>
++              </p>
++              <Button asChild size="lg" className="btn-shine font-body font-bold bg-white text-[#0e0c0a] hover:bg-[#f5f0e8] shadow-xl px-8 py-6">
++                <a href="#pricing">
++                  See Pricing Options
++                  <ArrowRight className="w-5 h-5 ml-2" />
++                </a>
++              </Button>
++            </div>
+           </div>
+         </AnimatedSection>
+       </div>
+diff --git a/src/components/landing/StatsSection.tsx b/src/components/landing/StatsSection.tsx
+index 518c753..e5e77ee 100755
+--- a/src/components/landing/StatsSection.tsx
++++ b/src/components/landing/StatsSection.tsx
+@@ -1,23 +1,21 @@
+ 'use client'
+ 
+ import { useState, useEffect } from 'react'
+-import { Globe } from 'lucide-react'
++import { Globe, TrendingUp } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ import { useScrollAnimation } from './hooks'
+ import { stats } from './constants'
+ 
+-// Animated Stats Counter
+-function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
++function AnimatedCounter({ value, suffix = '' }: { value: number; suffix: string }) {
+   const [count, setCount] = useState(0)
+   const { ref, isVisible } = useScrollAnimation()
+ 
+   useEffect(() => {
+     if (isVisible) {
+-      const duration = 2000
++      const duration = 1800
+       const steps = 60
+       const increment = value / steps
+       let current = 0
+-      
+       const timer = setInterval(() => {
+         current += increment
+         if (current >= value) {
+@@ -27,26 +25,38 @@ function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: strin
+           setCount(Math.floor(current))
+         }
+       }, duration / steps)
+-
+       return () => clearInterval(timer)
+     }
+   }, [isVisible, value])
+ 
+   return (
+-    <span ref={ref} className="font-display text-3xl md:text-4xl font-bold text-[#c9a84c]">
++    <span ref={ref} className="font-display text-4xl md:text-5xl font-bold gold-shimmer stat-number">
+       {count}{suffix}
+     </span>
+   )
+ }
+ 
++const destinations = ['Vietnam', 'South Korea', 'UAE', 'Turkey', 'Online']
++
+ export function StatsSection() {
+   return (
+-    <section className="py-16 md:py-24 bg-[#0e0c0a]">
+-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section className="py-16 md:py-28 bg-[#0e0c0a] relative overflow-hidden">
++      {/* Background texture */}
++      <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)', backgroundSize: '28px 28px' }} />
++      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#c9a84c]/5 rounded-full blur-3xl pointer-events-none" />
++      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent" />
++      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/20 to-transparent" />
++
++      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="text-center mb-12">
+-            <h2 className="font-display text-3xl md:text-4xl font-bold text-[#f5f0e8] mb-4">
+-              The Numbers Speak
++          <div className="text-center mb-14">
++            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/25 px-4 py-1.5 rounded-full mb-6">
++              <TrendingUp className="w-3.5 h-3.5 text-[#c9a84c]" />
++              <span className="font-body text-xs text-[#c9a84c] uppercase tracking-widest font-semibold">By the Numbers</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#f5f0e8] mb-4">
++              The Numbers{' '}
++              <span className="text-[#c9a84c]">Speak</span>
+             </h2>
+             <p className="font-body text-lg text-[#a09890]">
+               Real results from real Moroccan teachers.
+@@ -54,26 +64,43 @@ export function StatsSection() {
+           </div>
+         </AnimatedSection>
+ 
+-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
++        {/* Stats grid */}
++        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+           {stats.map((stat, index) => (
+-            <AnimatedSection key={index}>
+-              <div className="bg-[#1a1816] rounded-2xl p-6 text-center border border-[#2a2725]">
+-                <AnimatedCounter value={stat.number} suffix={stat.suffix} />
+-                <p className="font-body text-sm text-[#a09890] mt-2">{stat.label}</p>
++            <AnimatedSection key={index} className={`stagger-${index + 1}`}>
++              <div className="group relative bg-[#1a1816] rounded-2xl p-6 text-center border border-[#2a2725] hover:border-[#c9a84c]/40 transition-all duration-300 overflow-hidden">
++                {/* Hover glow */}
++                <div className="absolute inset-0 bg-[#c9a84c]/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
++                {/* Top line */}
++                <div className="absolute top-0 left-1/4 right-1/4 h-px bg-[#c9a84c]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
++
++                <div className="relative z-10">
++                  <AnimatedCounter value={stat.number} suffix={stat.suffix} />
++                  <p className="font-body text-sm text-[#6b6560] mt-2 leading-snug">{stat.label}</p>
++                </div>
+               </div>
+             </AnimatedSection>
+           ))}
+         </div>
+-        
++
++        {/* Destinations bar */}
+         <AnimatedSection>
+-          <div className="mt-12 bg-gradient-to-r from-[#c9a84c]/20 to-[#b85c38]/20 rounded-2xl p-6 md:p-8 border border-[#c9a84c]/30">
+-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+-              <div className="flex items-center gap-4">
+-                <Globe className="w-10 h-10 text-[#c9a84c]" />
+-                <div>
+-                  <p className="font-body text-[#f5f0e8] font-semibold">Our graduates now teach in</p>
+-                  <p className="font-display text-xl text-[#c9a84c]">Vietnam • South Korea • UAE • Turkey • Online</p>
++          <div className="bg-gradient-to-r from-[#c9a84c]/10 via-[#c9a84c]/15 to-[#c9a84c]/10 border border-[#c9a84c]/25 rounded-2xl px-6 md:px-10 py-6">
++            <div className="flex flex-col md:flex-row items-center gap-5">
++              <div className="flex items-center gap-3 flex-shrink-0">
++                <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/15 flex items-center justify-center">
++                  <Globe className="w-5 h-5 text-[#c9a84c]" />
+                 </div>
++                <p className="font-body text-[#f5f0e8] text-sm font-semibold whitespace-nowrap">
++                  Our graduates now teach in:
++                </p>
++              </div>
++              <div className="flex flex-wrap justify-center md:justify-start gap-2">
++                {destinations.map((dest, i) => (
++                  <span key={i} className="font-body text-xs font-semibold text-[#c9a84c] bg-[#c9a84c]/10 border border-[#c9a84c]/25 px-3 py-1 rounded-full">
++                    {dest}
++                  </span>
++                ))}
+               </div>
+             </div>
+           </div>
+diff --git a/src/components/landing/TestimonialsSection.tsx b/src/components/landing/TestimonialsSection.tsx
+index 0d515a4..8404d76 100755
+--- a/src/components/landing/TestimonialsSection.tsx
++++ b/src/components/landing/TestimonialsSection.tsx
+@@ -1,6 +1,6 @@
+ import { Card, CardContent } from '@/components/ui/card'
+ import { Badge } from '@/components/ui/badge'
+-import { Star, Quote } from 'lucide-react'
++import { Star } from 'lucide-react'
+ import { AnimatedSection } from './AnimatedSection'
+ 
+ const testimonials = [
+@@ -9,21 +9,24 @@ const testimonials = [
+     name: "Sara M.",
+     location: "Casablanca",
+     result: "Passed CELTA First Attempt",
+-    detail: "English Graduate, Hassan II University"
++    detail: "English Graduate, Hassan II University",
++    initials: "SM"
+   },
+   {
+     quote: "The mock teaching day was terrifying — exactly like the real thing. When I walked into my actual CELTA teaching practice, nothing surprised me. I knew exactly what to do. That alone was worth the investment.",
+     name: "Youssef A.",
+     location: "Rabat",
+     result: "First Attempt Pass",
+-    detail: "Private School Teacher, 3 years experience"
++    detail: "Private School Teacher, 3 years experience",
++    initials: "YA"
+   },
+   {
+     quote: "I failed CELTA the first time. I thought I was prepared. I wasn't. This program showed me exactly what I did wrong — and how to fix it. Second attempt: Pass A. Rachid changed my career trajectory.",
+     name: "Nadia B.",
+     location: "Fès",
+     result: "Pass A on Second Attempt",
+-    detail: "Now teaching in Dubai"
++    detail: "Now teaching in Dubai",
++    initials: "NB"
+   }
+ ]
+ 
+@@ -32,39 +35,55 @@ function TestimonialCard({
+   name, 
+   location, 
+   result,
+-  detail
++  detail,
++  initials,
++  index
+ }: { 
+   quote: string
+   name: string
+   location: string
+   result: string
+   detail: string
++  initials: string
++  index: number
+ }) {
+   return (
+-    <Card className="bg-white border-[#d4cdc0] shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+-      <CardContent className="p-6 flex flex-col h-full">
+-        <div className="flex gap-1 mb-4">
++    <Card className="premium-card bg-white border-[#d4cdc0] shadow-lg h-full relative overflow-hidden group">
++      {/* Top accent line */}
++      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#c9a84c] via-[#d4b96a] to-[#c9a84c]" />
++      
++      <CardContent className="p-7 flex flex-col h-full">
++        {/* Stars */}
++        <div className="flex gap-0.5 mb-4">
+           {[...Array(5)].map((_, i) => (
+             <Star key={i} className="w-4 h-4 fill-[#c9a84c] text-[#c9a84c]" />
+           ))}
+         </div>
+-        <Quote className="w-8 h-8 text-[#c9a84c]/30 mb-2" />
+-        <blockquote className="font-body text-[#0e0c0a] text-base md:text-lg mb-4 flex-grow italic">
++        
++        {/* Large quote mark */}
++        <div className="absolute top-6 right-6 font-display text-7xl text-[#c9a84c]/10 leading-none select-none pointer-events-none">"</div>
++        
++        {/* Quote */}
++        <blockquote className="font-body text-[#0e0c0a] text-base leading-relaxed mb-6 flex-grow relative z-10">
+           &ldquo;{quote}&rdquo;
+         </blockquote>
+-        <div className="mt-auto">
+-          <Badge className="bg-[#b85c38] text-white hover:bg-[#a04e2d] mb-4">
+-            {result}
++        
++        {/* Result badge */}
++        <div className="mb-5">
++          <Badge className="bg-gradient-to-r from-[#b85c38] to-[#a04e2d] text-white border-0 font-body font-semibold text-xs px-3 py-1">
++            ✓ {result}
+           </Badge>
+-          <div className="flex items-center gap-3">
+-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center text-white font-display font-bold">
+-              {name.charAt(0)}
+-            </div>
+-            <div>
+-              <p className="font-body font-semibold text-[#0e0c0a]">{name}</p>
+-              <p className="font-body text-sm text-[#6b6560]">{location}</p>
+-              <p className="font-body text-xs text-[#a09890]">{detail}</p>
+-            </div>
++        </div>
++        
++        {/* Author */}
++        <div className="mt-auto flex items-center gap-3 pt-4 border-t border-[#e8e0d0]">
++          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b85c38] flex items-center justify-center text-white font-display font-bold text-lg flex-shrink-0 shadow-md">
++            {initials}
++          </div>
++          <div>
++            <p className="font-body font-semibold text-[#0e0c0a]">{name}</p>
++            <p className="font-body text-sm text-[#6b6560]">{location}</p>
++            <p className="font-body text-xs text-[#a09890]">{detail}</p>
+           </div>
+         </div>
+       </CardContent>
+@@ -74,50 +93,56 @@ function TestimonialCard({
+ 
+ export function TestimonialsSection() {
+   return (
+-    <section className="py-16 md:py-24 bg-[#e8e0d0]">
+-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
++    <section className="py-16 md:py-24 bg-[#e8e0d0] relative overflow-hidden">
++      {/* Subtle background pattern */}
++      <div className="absolute inset-0 opacity-20" style={{
++        backgroundImage: 'radial-gradient(circle at 1px 1px, #c9a84c 1px, transparent 0)',
++        backgroundSize: '40px 40px'
++      }} />
++      
++      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <AnimatedSection>
+-          <div className="text-center mb-12">
+-            <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0e0c0a] mb-4">
+-              Real Teachers. Real Results.
++          <div className="text-center mb-14">
++            <div className="inline-flex items-center gap-2 bg-white px-4 py-1.5 rounded-full shadow-sm border border-[#d4cdc0] mb-6">
++              <div className="flex gap-0.5">
++                {[...Array(5)].map((_, i) => (
++                  <Star key={i} className="w-3 h-3 fill-[#c9a84c] text-[#c9a84c]" />
++                ))}
++              </div>
++              <span className="font-body text-xs text-[#6b6560] font-medium">4.9/5 average rating</span>
++            </div>
++            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e0c0a] mb-4">
++              Real Teachers.{' '}
++              <span className="text-[#b85c38]">Real Results.</span>
+             </h2>
+             <p className="font-body text-lg text-[#6b6560] max-w-2xl mx-auto">
+-              These are actual students who prepared with us. Their results speak for themselves.
++              These are actual students who prepared with us. Their words, unedited.
+             </p>
+           </div>
+         </AnimatedSection>
+ 
+         <div className="grid md:grid-cols-3 gap-6">
+           {testimonials.map((testimonial, index) => (
+-            <AnimatedSection key={index}>
+-              <TestimonialCard
+-                quote={testimonial.quote}
+-                name={testimonial.name}
+-                location={testimonial.location}
+-                result={testimonial.result}
+-                detail={testimonial.detail}
+-              />
++            <AnimatedSection key={index} className={`stagger-${index + 1}`}>
++              <TestimonialCard {...testimonial} index={index} />
+             </AnimatedSection>
+           ))}
+         </div>
+ 
+         <AnimatedSection>
+-          <div className="mt-12 text-center">
+-            <div className="inline-flex items-center gap-6 bg-white rounded-full px-8 py-4 shadow-lg border border-[#d4cdc0]">
+-              <div className="text-center">
+-                <p className="font-display text-3xl font-bold text-[#c9a84c]">44</p>
+-                <p className="font-body text-xs text-[#6b6560]">First-attempt passes</p>
+-              </div>
+-              <div className="w-px h-10 bg-[#d4cdc0]" />
+-              <div className="text-center">
+-                <p className="font-display text-3xl font-bold text-[#c9a84c]">3</p>
+-                <p className="font-body text-xs text-[#6b6560]">Required extra support</p>
+-              </div>
+-              <div className="w-px h-10 bg-[#d4cdc0]" />
+-              <div className="text-center">
+-                <p className="font-display text-3xl font-bold text-[#c9a84c]">47</p>
+-                <p className="font-body text-xs text-[#6b6560]">Total students</p>
+-              </div>
++          <div className="mt-14 text-center">
++            <div className="inline-flex flex-wrap justify-center items-center gap-0 bg-white rounded-2xl shadow-xl border border-[#d4cdc0] overflow-hidden">
++              {[
++                { num: '44', label: 'First-attempt passes', color: '#c9a84c' },
++                { num: '3', label: 'Required extra support', color: '#b85c38' },
++                { num: '47', label: 'Total students', color: '#0e0c0a' },
++                { num: '5+', label: 'Countries they now teach in', color: '#6b6560' },
++              ].map((stat, i) => (
++                <div key={i} className={`px-8 py-5 text-center ${i < 3 ? 'border-r border-[#e8e0d0]' : ''}`}>
++                  <p className="font-display text-3xl font-bold stat-number" style={{ color: stat.color }}>{stat.num}</p>
++                  <p className="font-body text-xs text-[#6b6560] mt-1 whitespace-nowrap">{stat.label}</p>
++                </div>
++              ))}
+             </div>
+           </div>
+         </AnimatedSection>
