@@ -112,7 +112,7 @@ function chunkMarkdown(content: string): Chunk[] {
 
   const flushBuffer = () => {
     const text = paragraphBuffer.join('\n').trim()
-    if (text.length < 80) {
+    if (text.length < 120) {
       paragraphBuffer = []
       return
     }
@@ -131,7 +131,7 @@ function chunkMarkdown(content: string): Chunk[] {
         const currentText = current.join('\n\n')
         if (currentText.length + para.length > TARGET_CHUNK_CHARS && current.length > 0) {
           const chunkText = currentText.trim()
-          if (chunkText.length >= 80) {
+          if (chunkText.length >= 120) {
             chunks.push({
               content: chunkText,
               chapter,
@@ -150,7 +150,7 @@ function chunkMarkdown(content: string): Chunk[] {
 
       if (current.length > 0) {
         const chunkText = current.join('\n\n').trim()
-        if (chunkText.length >= 80) {
+        if (chunkText.length >= 120) {
           chunks.push({
             content: chunkText,
             chapter,
